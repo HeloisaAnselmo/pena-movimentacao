@@ -91,8 +91,8 @@ async function consultar() {
             resultadodiv.innerHTML = `
                 <div class="card" style="margin-top:15px; border-left: 5px solid #0e121a;">
                     <div class="info"><b>OP:</b> ${dados.ordem_producao || op}</div>
-                    <div class="info"><b>Referência/Produto:</b> ${produto}</div>
-                    <div class="info"><b>Cor:</b> ${desc}</div>
+                    <div class="info"><b>Referência:</b> ${produto}</div>
+                    <div class="info"><b>Produto:</b> ${desc}</div>
                     <hr style="margin: 10px 0; border: 0; border-top: 1px dashed #ddd;">
                     <div class="info"><b>Tarefa Atual:</b> ${tarefa}</div>
                     <div class="info"><b>Setor Atual:</b> ${setor}</div>
