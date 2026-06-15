@@ -70,22 +70,34 @@ async function consultar() {
         let desc = 'Não informada';
         let tarefa = 'Nenhuma tarefa pendente';
         let setor = 'Finalizado';
+
+        // ADICIONADO
+        let faseProducao = '';
+        let descFaseProducao = '';
+
         let qtdPrevista = 0;
         let qtdEmProcesso = 0;
-
+        
         if (dados.cabecalho && Array.isArray(dados.cabecalho) && dados.cabecalho.length > 0 && dados.cabecalho[0]) {
             const cb = dados.cabecalho[0];
             produto = cb.PRODUTO;
             desc = cb.DESC_PRODUTO;
         }
 
-        if (dados.tarefas_ativas && Array.isArray(dados.tarefas_ativas) && dados.tarefas_ativas.length > 0 && dados.tarefas_ativas[0]) {
-            const ta = dados.tarefas_ativas[0];
-            tarefa = ta.TAREFA;
-            setor = ta.DESC_SETOR_PRODUCAO;
-            qtdPrevista = ta.QTDE_PREVISTA;
-            qtdEmProcesso = ta.QTDE_EM_PROCESSO;
-        }
+        // Validação rigorosa da Tarefa Ativa (Evita o erro do DESC_SETOR_PRODUCAO)
+       if (dados.tarefas_ativas && Array.isArray(dados.tarefas_ativas) && dados.tarefas_ativas.length > 0 && dados.tarefas_ativas[0]) {
+        const ta = dados.tarefas_ativas[0];
+
+        tarefa = ta.TAREFA;
+        setor = ta.DESC_SETOR_PRODUCAO;
+
+        // ADICIONADO
+        faseProducao = ta.FASE_PRODUCAO;
+        descFaseProducao = ta.DESC_FASE_PRODUCAO;
+
+        qtdPrevista = ta.QTDE_PREVISTA;
+        qtdEmProcesso = ta.QTDE_EM_PROCESSO;
+    }
 
         if (resultadodiv) {
             resultadodiv.innerHTML = `
@@ -94,8 +106,11 @@ async function consultar() {
                     <div class="info"><b>Referência:</b> ${produto}</div>
                     <div class="info"><b>Produto:</b> ${desc}</div>
                     <hr style="margin: 10px 0; border: 0; border-top: 1px dashed #ddd;">
-                    <div class="info"><b>Tarefa Atual:</b> ${tarefa}</div>
+                   <div class="info"><b>Tarefa Atual:</b> ${tarefa}</div>
                     <div class="info"><b>Setor Atual:</b> ${setor}</div>
+                    <div class="info"><b>Fase Produção:</b> ${faseProducao}</div>
+                    <div class="info"><b>Descrição da Fase:</b> ${descFaseProducao}</div>
+
                     <div class="info"><b>Qtd Prevista:</b> ${qtdPrevista}</div>
                     <div class="info"><b>Qtd Em Processo:</b> ${qtdEmProcesso}</div>
                 </div>`;
