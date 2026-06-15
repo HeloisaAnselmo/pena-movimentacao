@@ -40,7 +40,65 @@
             <button onclick="show('dashboard')">Voltar</button>
         </div>
     </section>
-<section id="movimentacao" class="screen">
+
+
+    <section id="movimentacao" class="screen">
+        <div class="card">
+
+            <h2>Movimentação entre Setores</h2>
+
+            <div class="grid">
+
+                <div>
+                    <label>OP</label>
+                    <input id="op" value="">
+
+
+                    <label>Produto</label>
+                    <input id="produto" value="" readonly>
+
+                    <label>Descrição</label>
+                    <input id="descricao" value="" readonly>
+
+                    <label>Data de Emissão</label>
+                    <input id="dataEmissao" type="">
+                </div>
+
+                <div>
+                    <label>Setor Atual (Tarefa Atual)</label>
+                    <input id="origem" value="Corte" readonly>
+
+                    <label>Próxima Tarefa (Destino)</label>
+                    <input id="destino" value="" readonly placeholder="">
+
+                    <label>Quantidade</label>
+                    <input id="quantidade" type="number" value="" readonly>
+
+                    <input type="hidden" id="tarefa_atual">
+                    <input type="hidden" id="proxima_tarefa">
+                    <input type="hidden" id="proximo_setor">
+                    <input type="hidden" id="proxima_fase">
+                    <input type="hidden" id="proximo_recurso">
+                </div>
+
+            </div>
+
+            <button id="btnMov" onclick="movimentar()">
+                Confirmar Movimentação
+            </button>
+
+            <div id="ok" class="success"></div>
+            <div id="erro" class="error"></div>
+
+            <button onclick="show('dashboard')">
+                Voltar
+            </button>
+
+        </div>
+    </section>
+
+
+<!-- <section id="movimentacao" class="screen">
     <div class="card">
 
         <h2>Movimentação entre Setores</h2>
@@ -49,7 +107,7 @@
 
             <div>
                 <label>OP</label>
-                <input id="codigoConsulta" value="20260001">
+                <input id="op" value="20260001">
 
                 <label>Produto</label>
                 <input id="produto" value="CAMISETA MOVE HEART">
@@ -91,7 +149,7 @@
         </button>
 
     </div>
-</section>
+</section> -->
 
     <br><br><br><br><br><br><br><br>
     <footer class="footer">
@@ -110,5 +168,6 @@
 </footer>
 
 <script src="src/script.js"></script>
+<!-- <script src="src/movimentar.js"></script> -->
 </body>
 </html>

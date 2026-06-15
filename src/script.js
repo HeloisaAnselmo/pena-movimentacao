@@ -1,110 +1,47 @@
-
-
-// const bancoInicial = {
-//     "20260001": {
-//         op: "20260001",
-//         produto: "CAMISETA MOVE HEART",
-//         descricao: "CAMISETA MOVE HEART AZUL MARINHO",
-//         dataEmissao: "2026-03-24",
-//         planejado: 1000,
-//         produzido: 650,
-//         saldo: 350,
-//         setor: "Corte"
-//     }
-// };
-
-
-// if (!localStorage.getItem("ops")) {
-//     localStorage.setItem(
-//         "ops",
-//         JSON.stringify(bancoInicial)
-//     );
-// }
-
-
-const API_URL = "http://192.168.0.138:8000"
+const API_URL = "http://192.168.0.138:8000";
 
 async function login() {
+    const usuario = document.getElementById('matricula').value.trim();
+    const senha = document.getElementById('senha').value.trim();
 
-    const usuario = document.getElementById('matricula').value.trim()
-    const senha = document.getElementById('senha').value.trim()
-    
-
-    if (!usuario || !senha){
-        alert('Informe o usuário e senha')
+    if (!usuario || !senha) {
+        alert('Informe o usuário e senha');
         return;
     }
 
     try {
         const response = await fetch(`${API_URL}/login`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({usuario: usuario, senha: senha})
-        })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usuario: usuario, senha: senha })
+        });
 
-        const dados = await response.json()
+        const dados = await response.json();
 
         if (!response.ok) {
-            throw new Error(dados.detail || 'Erro ao realizar login')
+            throw new Error(dados.detail || 'Erro ao realizar login');
         }
 
-
-        localStorage.setItem('token', dados.token)
-        localStorage.setItem('usuario', usuario)
+        localStorage.setItem('token', dados.token);
+        localStorage.setItem('usuario', usuario);
 
         document.getElementById('operatorName').innerText = 'Operador: ' + usuario;
-        show('dashboard')
+        show('dashboard');
 
- 
-
+    } catch (erro) {
+        alert(erro.message);
     }
-
-    catch (erro) {
-        alert(erro.message)
-    }
-
 }
-
 
 function show(id) {
-    document
-        .querySelectorAll('.screen')
-        .forEach(s => s.classList.remove('active'));
-
-    document
-        .getElementById(id)
-        .classList.add('active');
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) {
+        target.classList.add('active');
+    }
 }
 
-
-
-// function login() {
-
-//     const m = document
-//         .getElementById('matricula')
-//         .value
-//         .trim();
-
-//     const s = document
-//         .getElementById('senha')
-//         .value
-//         .trim();
-
-//     if (!m || !s) {
-//         alert('Informe matrícula e senha');
-//         return;
-//     }
-
-//     document.getElementById('operatorName').innerText =
-//         'Operador: ' + m;
-
-//     show('dashboard');
-// }
-
-
-
 async function consultar() {
-    // Busca o valor do campo de consulta de forma segura
     const inputConsulta = document.getElementById('codigoConsulta') || document.getElementById('op');
     const op = inputConsulta ? inputConsulta.value.trim() : "";
 
@@ -129,10 +66,9 @@ async function consultar() {
             throw new Error(dados.detail || 'Erro ao consultar OP');
         }
 
-        // Criando variáveis nulas por padrão para evitar "undefined"
         let produto = 'Não informado';
-        let cor = 'Não informada';
-       let tarefa = 'Nenhuma tarefa pendente';
+        let desc = 'Não informada';
+        let tarefa = 'Nenhuma tarefa pendente';
         let setor = 'Finalizado';
 
         // ADICIONADO
@@ -141,11 +77,11 @@ async function consultar() {
 
         let qtdPrevista = 0;
         let qtdEmProcesso = 0;
-        // Validação rigorosa do Cabeçalho
+        
         if (dados.cabecalho && Array.isArray(dados.cabecalho) && dados.cabecalho.length > 0 && dados.cabecalho[0]) {
             const cb = dados.cabecalho[0];
-            produto = cb.PRODUTO
-            cor = cb.COR_PRODUTO
+            produto = cb.PRODUTO;
+            desc = cb.DESC_PRODUTO;
         }
 
         // Validação rigorosa da Tarefa Ativa (Evita o erro do DESC_SETOR_PRODUCAO)
@@ -163,13 +99,12 @@ async function consultar() {
         qtdEmProcesso = ta.QTDE_EM_PROCESSO;
     }
 
-        
         if (resultadodiv) {
             resultadodiv.innerHTML = `
                 <div class="card" style="margin-top:15px; border-left: 5px solid #0e121a;">
                     <div class="info"><b>OP:</b> ${dados.ordem_producao || op}</div>
-                    <div class="info"><b>Referência/Produto:</b> ${produto}</div>
-                    <div class="info"><b>Cor:</b> ${cor}</div>
+                    <div class="info"><b>Referência:</b> ${produto}</div>
+                    <div class="info"><b>Produto:</b> ${desc}</div>
                     <hr style="margin: 10px 0; border: 0; border-top: 1px dashed #ddd;">
                    <div class="info"><b>Tarefa Atual:</b> ${tarefa}</div>
                     <div class="info"><b>Setor Atual:</b> ${setor}</div>
@@ -181,206 +116,231 @@ async function consultar() {
                 </div>`;
         }
 
-        // Alimenta os inputs da tela de movimentação apenas se eles existirem na página
-        // const inputMovOp = document.getElementById('movOp') || document.getElementById('op');
-        // const inputProduto = document.getElementById('produto');
-        // const inputDescricao = document.getElementById('descricao');
-        // const inputOrigem = document.getElementById('origem');
-        // const inputQuantidade = document.getElementById('quantidade');
+        const tarefaAtual = dados.tarefas_ativas[0];
+        const proximaTarefa = dados.tarefas_ativas[1];
+        const cabecalho = dados.cabecalho[0];
 
-        // if (inputMovOp) inputMovOp.value = dados.ordem_producao || op;
-        // if (inputProduto) inputProduto.value = produto;
-        // if (inputDescricao) inputDescricao.value = cor;
-        // if (inputOrigem) inputOrigem.value = setor !== 'Finalizado' ? setor : '';
-        // if (inputQuantidade) inputQuantidade.value = qtdPrevista;
+        document.getElementById('op').value = dados.ordem_producao;
+        document.getElementById('produto').value = cabecalho.PRODUTO;
+        document.getElementById('descricao').value = cabecalho.DESC_PRODUTO;
+        document.getElementById('origem').value = tarefaAtual.DESC_SETOR_PRODUCAO;
+        document.getElementById('quantidade').value = tarefaAtual.QTDE_PREVISTA;
+        
+        if (proximaTarefa) {
+            document.getElementById('destino').value = proximaTarefa.DESC_SETOR_PRODUCAO;
+            document.getElementById('proxima_tarefa').value = proximaTarefa.TAREFA;
+            document.getElementById('proxima_fase').value = proximaTarefa.FASE_PRODUCAO;
+            document.getElementById('proximo_setor').value = proximaTarefa.SETOR_PRODUCAO;
+            document.getElementById('proximo_recurso').value = proximaTarefa.RECURSO_PRODUTIVO || "";
+        } else {
+            document.getElementById('destino').value = "Fluxo Finalizado";
+            document.getElementById('proxima_tarefa').value = "";
+            document.getElementById('proxima_fase').value = "";
+            document.getElementById('proximo_setor').value = "";
+            document.getElementById('proximo_recurso').value = "";
+        }
+
+        document.getElementById('tarefa_atual').value = tarefaAtual.TAREFA;
+        document.getElementById('dataEmissao').value = cabecalho.DATA || "";
 
         sessionStorage.setItem('dados_op_atual', JSON.stringify(dados));
-
+        
     } catch (erro) {
         console.error("Erro detectado na consulta:", erro);
         if (resultadodiv) {
             resultadodiv.innerHTML = `
-                <div class="error" style="display:block; margin-top:15px; color: black; font-weight: bold;">
-                    ⚠️ ${erro.message}
-                </div>`;
+            <div class="error" style="display:block; margin-top:15px; color: black; font-weight: bold;">
+            ${erro.message}
+            </div>`;
         }
     }
 }
 
-    // // const banco = JSON.parse(
-    // //     localStorage.getItem("ops")
-    // // );
+async function movimentar() {
+    const botao = document.getElementById('btnMov');
+    const caixaOk = document.getElementById('ok');
+    const caixaErro = document.getElementById('erro');
 
-    // const dados = banco[codigo];
+    if (caixaOk) caixaOk.style.display = 'none';
+    if (caixaErro) caixaErro.style.display = 'none';
 
-    // if (!dados) {
-    //     alert("OP não encontrada.");
-    //     return;
-    // }
+    const dadosOp = JSON.parse(sessionStorage.getItem('dados_op_atual'));
 
-    // document.getElementById(
-    //     'consultaResultado'
-    // ).innerHTML = `
+    if (!dadosOp || !dadosOp.tarefas_ativas || dadosOp.tarefas_ativas.length === 0) {
+        if (caixaErro) {
+            caixaErro.innerText = 'Busque uma OP válida antes de movimentar.';
+            caixaErro.style.display = 'block';
+        }
+        return;
+    }
+
+    const tarefaAtualDoBanco = dadosOp.tarefas_ativas[0];
+
+    // Captura dos elementos do DOM de forma limpa e sem duplicar variáveis
+    const op = document.getElementById('op').value.trim();
+    const quantidade = parseInt(document.getElementById('quantidade').value) || 0;
+    const produto = document.getElementById('produto').value.trim();
+    const valorProximaTarefa = document.getElementById('proxima_tarefa').value.trim();
+    const valorTarefaAtual = document.getElementById('tarefa_atual').value.trim();
+    const recurso = document.getElementById('proximo_recurso').value.trim();
+    const proximaFase = document.getElementById('proxima_fase').value.trim();
+    const proximoSetor = document.getElementById('proximo_setor').value.trim();
     
-    // <div class="card" style="margin-top:15px">
+    const origem = document.getElementById('origem').value.trim();
+    const destino = document.getElementById('destino').value.trim();
 
-    //     <div class="info"><b>OP:</b> ${dados.op}</div>
-
-    //     <div class="info">
-    //         <b>Produto:</b> ${dados.produto}
-    //     </div>
-
-    //     <div class="info">
-    //         <b>Descrição:</b> ${dados.descricao}
-    //     </div>
-
-    //     <div class="info">
-    //         <b>Data de Emissão:</b> ${dados.dataEmissao}
-    //     </div>
-
-    //     <div class="info">
-    //         <b>Planejado:</b> ${dados.planejado}
-    //     </div>
-
-    //     <div class="info">
-    //         <b>Produzido:</b> ${dados.produzido}
-    //     </div>
-
-    //     <div class="info">
-    //         <b>Saldo:</b> ${dados.saldo}
-    //     </div>
-
-    //     <div class="info">
-    //         <b>Setor Atual:</b> ${dados.setor}
-    //     </div>
-
-    // </div>
-    // `;
-
-
-
-function movimentar() {
-
-    const op = document
-        .getElementById('op')
-        .value
-        .trim();
-
-    const produto = document
-        .getElementById('produto')
-        .value
-        .trim();
-
-    const descricao = document
-        .getElementById('descricao')
-        .value
-        .trim();
-
-    const dataEmissao = document
-        .getElementById('dataEmissao')
-        .value
-        .trim();
-
-    const origem = document
-        .getElementById('origem')
-        .value
-        .trim();
-
-    const destino = document
-        .getElementById('destino')
-        .value
-        .trim();
-
-    const btn = document.getElementById('btnMov');
-    const ok = document.getElementById('ok');
-    const erro = document.getElementById('erro');
-
-    ok.style.display = 'none';
-    erro.style.display = 'none';
-
-    if (
-        !op ||
-        !produto ||
-        !descricao ||
-        !origem ||
-        !destino
-    ) {
-        erro.innerText =
-            'Não foi possível fazer a movimentação. Campo vazio.';
-
-        erro.style.display = 'block';
+    if (!op || !destino) {
+        if (caixaErro) {
+            caixaErro.innerText = 'Selecione o setor de destino para movimentar.';
+            caixaErro.style.display = 'block';
+        }
         return;
     }
 
     if (origem === destino) {
-
-        erro.innerText =
-            'Destino não pode ser igual ao setor atual.';
-
-        erro.style.display = 'block';
+        if (caixaErro) {
+            caixaErro.innerText = 'O destino não pode ser igual ao setor atual.';
+            caixaErro.style.display = 'block';
+        }
         return;
     }
 
-    const banco = JSON.parse(
-        localStorage.getItem("ops")
-    );
+    const linhasCabecalhos = dadosOp.cabecalho || [];
+    
+    // Filtra as grades correspondentes do cabeçalho baseado na tarefa atual
+    const linhasDaTarefaAtual = linhasCabecalhos.filter(linha => {
+        return String(linha.TAREFA).trim() === String(tarefaAtualDoBanco.TAREFA).trim();
+    });
 
-    if (!banco[op]) {
-
-        banco[op] = {
-            op: op,
-            produto: produto,
-            descricao: descricao,
-            dataEmissao: dataEmissao,
-            planejado: 0,
-            produzido: 0,
-            saldo: 0,
-            setor: destino
-        };
-
-    } else {
-
-        banco[op].produto = produto;
-        banco[op].descricao = descricao;
-        banco[op].dataEmissao = dataEmissao;
-        banco[op].setor = destino;
+    if (linhasDaTarefaAtual.length === 0) {
+        if (caixaErro) {
+            caixaErro.innerText = `Nenhuma grade encontrada no cabeçalho para a Tarefa ${tarefaAtualDoBanco.TAREFA}.`;
+            caixaErro.style.display = 'block';
+        }
+        return;
     }
 
-    localStorage.setItem(
-        "ops",
-        JSON.stringify(banco)
-    );
+    let totalGeralMovimentado = 0;
 
-    btn.disabled = true;
-    btn.innerText = 'Processando...';
-
-    setTimeout(() => {
-
-        ok.innerText =
-            'Movimentação registrada com sucesso!';
-
-        ok.style.display = 'block';
-
-        document.getElementById('origem').value =
-            destino;
-
-        btn.disabled = false;
-        btn.innerText =
-            'Confirmar Movimentação';
-
-    }, 1500);
-}
+    // O .map() executa e fecha corretamente gerando a lista de itens
+    const itensGradesMapeados = linhasDaTarefaAtual.map(linha => {
+        const totalPecasCor = (parseInt(linha.O1) || 0) + (parseInt(linha.O2) || 0) + 
+            (parseInt(linha.O3) || 0) + (parseInt(linha.O4) || 0) + 
+            (parseInt(linha.O5) || 0) + (parseInt(linha.O6) || 0) + 
+            (parseInt(linha.O7) || 0) + (parseInt(linha.O8) || 0) + 
+            (parseInt(linha.O9) || 0) + (parseInt(linha.O10) || 0) + 
+            (parseInt(linha.O11) || 0) + (parseInt(linha.O12) || 0) + 
+            (parseInt(linha.O13) || 0) + (parseInt(linha.O14) || 0) + 
+            (parseInt(linha.O15) || 0) + (parseInt(linha.O16) || 0);
+            
+        totalGeralMovimentado += totalPecasCor;
 
 
+        console.log(linha.COR_PRODUTO);
+        console.log(totalPecasCor);
 
-document
-    .getElementById('codigoConsulta')
-    .addEventListener('keypress', e => {
+         console.log({ cor: linha.COR_PRODUTO.trim(),
+            quantidade_cor: totalPecasCor,
+            T1: parseInt(linha.O1) || 0,
+            T2: parseInt(linha.O2) || 0,
+            T3: parseInt(linha.O3) || 0,
+            T4: parseInt(linha.O4) || 0,
+            T5: parseInt(linha.O5) || 0,
+            T6: parseInt(linha.O6) || 0,
+            T7: parseInt(linha.O7) || 0,
+            T8: parseInt(linha.O8) || 0,
+            T9: parseInt(linha.O9) || 0,
+            T10: parseInt(linha.O10) || 0,
+            T11: parseInt(linha.O11) || 0,
+            T12: parseInt(linha.O12) || 0,
+            T13: parseInt(linha.O13) || 0,
+            T14: parseInt(linha.O14) || 0,
+            T15: parseInt(linha.O15) || 0,
+            T16: parseInt(linha.O16) || 0})
 
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            consultar();
+
+        return {
+            cor: linha.COR_PRODUTO.trim(),
+            quantidade_cor: totalPecasCor,
+            T1: parseInt(linha.O1) || 0,
+            T2: parseInt(linha.O2) || 0,
+            T3: parseInt(linha.O3) || 0,
+            T4: parseInt(linha.O4) || 0,
+            T5: parseInt(linha.O5) || 0,
+            T6: parseInt(linha.O6) || 0,
+            T7: parseInt(linha.O7) || 0,
+            T8: parseInt(linha.O8) || 0,
+            T9: parseInt(linha.O9) || 0,
+            T10: parseInt(linha.O10) || 0,
+            T11: parseInt(linha.O11) || 0,
+            T12: parseInt(linha.O12) || 0,
+            T13: parseInt(linha.O13) || 0,
+            T14: parseInt(linha.O14) || 0,
+            T15: parseInt(linha.O15) || 0,
+            T16: parseInt(linha.O16) || 0
+        };
+    });
+
+    // O payload agora está isolado, estruturado e mapeando as propriedades em maiúsculo de linhasCabecalhos
+    const payload = {
+        "produto": produto,
+        "ordem_producao": dadosOp.ordem_producao,
+        "tarefa": valorProximaTarefa,
+        "tarefa_anterior": valorTarefaAtual,
+        "sequencia_produtiva": String(tarefaAtualDoBanco.SEQUENCIA_PRODUTIVA || "0"),
+        "quantidade_movimentada_total": totalGeralMovimentado,
+        "recurso_produtivo": recurso || "PADRAO",
+        "fase_producao": proximaFase,
+        "setor_producao": proximoSetor,
+        "itens_grades": itensGradesMapeados
+    };
+
+    const token = localStorage.getItem('token');
+
+    if (botao) {
+        botao.disabled = true;
+        botao.innerHTML = 'Processando...';
+    }
+
+    try {
+        const envio = await fetch(`${API_URL}/movimentarop`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const resposta = await envio.json();
+
+        if (!envio.ok) {
+            throw new Error(resposta.detail || 'Erro ao processar a movimentação');
         }
 
-    });
-    
+        if (caixaOk) {
+            caixaOk.innerText = 'Movimentação registrada com sucesso!';
+            caixaOk.style.display = 'block';
+        }
+    }
+    catch (err) {
+        console.error('Erro na movimentação', err);
+        if (caixaErro) {
+            caixaErro.innerText = `${err.message}`;
+            caixaErro.style.display = 'block';
+        }
+    }
+    finally {
+        if (botao) {
+            botao.disabled = false;
+            botao.innerText = 'Confirmar Movimentação';
+        }
+    }
+}
+
+document.getElementById('codigoConsulta').addEventListener('keypress', e => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        consultar();
+    }
+});
