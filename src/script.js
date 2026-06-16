@@ -118,6 +118,11 @@ async function consultar() {
 
         const tarefaAtual = dados.tarefas_ativas[0];
         const proximaTarefa = dados.tarefas_ativas[1];
+        document.getElementById('faseAtual').value =
+        tarefaAtual.FASE_PRODUCAO || '';
+
+        document.getElementById('recursoAtual').value =
+        tarefaAtual.RECURSO_PRODUTIVO || '';
         const cabecalho = dados.cabecalho[0];
 
         document.getElementById('op').value = dados.ordem_producao;
@@ -132,12 +137,18 @@ async function consultar() {
             document.getElementById('proxima_fase').value = proximaTarefa.FASE_PRODUCAO;
             document.getElementById('proximo_setor').value = proximaTarefa.SETOR_PRODUCAO;
             document.getElementById('proximo_recurso').value = proximaTarefa.RECURSO_PRODUTIVO || "";
+            document.getElementById('faseDestino').value =
+            proximaTarefa.FASE_PRODUCAO || '';
+            document.getElementById('recursoDestino').value =
+            proximaTarefa.RECURSO_PRODUTIVO || '';
         } else {
             document.getElementById('destino').value = "Fluxo Finalizado";
             document.getElementById('proxima_tarefa').value = "";
             document.getElementById('proxima_fase').value = "";
             document.getElementById('proximo_setor').value = "";
             document.getElementById('proximo_recurso').value = "";
+            document.getElementById('faseDestino').value = 'Finalizado';
+            document.getElementById('recursoDestino').value = 'Finalizado';
         }
 
         document.getElementById('tarefa_atual').value = tarefaAtual.TAREFA;
