@@ -1,5 +1,6 @@
 const API_URL = "http://192.168.0.138:8000";
 
+
 async function login() {
     const usuario = document.getElementById('matricula').value.trim();
     const senha = document.getElementById('senha').value.trim();
@@ -75,8 +76,14 @@ async function consultar() {
         let faseProducao = '';
         let descFaseProducao = '';
 
+
+        // ADICIONADO
+        let faseProducao = '';
+        let descFaseProducao = '';
+
         let qtdPrevista = 0;
         let qtdEmProcesso = 0;
+        
         
         if (dados.cabecalho && Array.isArray(dados.cabecalho) && dados.cabecalho.length > 0 && dados.cabecalho[0]) {
             const cb = dados.cabecalho[0];
@@ -94,6 +101,8 @@ async function consultar() {
         // ADICIONADO
         faseProducao = ta.FASE_PRODUCAO;
         descFaseProducao = ta.DESC_FASE_PRODUCAO;
+        recurso = ta.RECURSO_PRODUTIVO;
+        descRecurso = ta.DESC_RECURSO;
 
         qtdPrevista = ta.QTDE_PREVISTA;
         qtdEmProcesso = ta.QTDE_EM_PROCESSO;
@@ -107,27 +116,30 @@ async function consultar() {
                     <div class="info"><b>Produto:</b> ${desc}</div>
                     <hr style="margin: 10px 0; border: 0; border-top: 1px dashed #ddd;">
                    <div class="info"><b>Tarefa Atual:</b> ${tarefa}</div>
+                   <div class="info"><b>Tarefa Atual:</b> ${tarefa}</div>
                     <div class="info"><b>Setor Atual:</b> ${setor}</div>
                     <div class="info"><b>Fase Produção:</b> ${faseProducao}</div>
                     <div class="info"><b>Descrição da Fase:</b> ${descFaseProducao}</div>
+                    <div class="info"><b>Recurso Produtivo:</b> ${recurso}</div>
+                    <div class="info"><b>Descrição do Recurso:</b> ${descRecurso}</div>
 
                     <div class="info"><b>Qtd Prevista:</b> ${qtdPrevista}</div>
                     <div class="info"><b>Qtd Em Processo:</b> ${qtdEmProcesso}</div>
                 </div>`;
         }
-
+        
         const tarefaAtual = dados.tarefas_ativas[0];
         const proximaTarefa = dados.tarefas_ativas[1];
         const cabecalho = dados.cabecalho[0];
-
+        // preenchimento dos campos do formulário de movimentação
         document.getElementById('op').value = dados.ordem_producao;
         document.getElementById('produto').value = cabecalho.PRODUTO;
         document.getElementById('descricao').value = cabecalho.DESC_PRODUTO;
-        document.getElementById('origem').value = tarefaAtual.DESC_SETOR_PRODUCAO;
-        document.getElementById('quantidade').value = tarefaAtual.QTDE_PREVISTA;
+        document.getElementById('origem').value = tarefaAtual.DESC_RECURSO;
+        document.getElementById('quantidade').value = tarefaAtual.QTDE_EM_PROCESSO;
         
         if (proximaTarefa) {
-            document.getElementById('destino').value = proximaTarefa.DESC_SETOR_PRODUCAO;
+            document.getElementById('destino').value = proximaTarefa.DESC_RECURSO;
             document.getElementById('proxima_tarefa').value = proximaTarefa.TAREFA;
             document.getElementById('proxima_fase').value = proximaTarefa.FASE_PRODUCAO;
             document.getElementById('proximo_setor').value = proximaTarefa.SETOR_PRODUCAO;
@@ -288,7 +300,7 @@ async function movimentar() {
         "tarefa": valorProximaTarefa,
         "tarefa_anterior": valorTarefaAtual,
         "sequencia_produtiva": String(tarefaAtualDoBanco.SEQUENCIA_PRODUTIVA || "0"),
-        "quantidade_movimentada_total": totalGeralMovimentado,
+        "quantidade_movimentada_total": tarefaAtualDoBanco.QTDE_EM_PROCESSO,
         "recurso_produtivo": recurso || "PADRAO",
         "fase_producao": proximaFase,
         "setor_producao": proximoSetor,
@@ -344,3 +356,28 @@ document.getElementById('codigoConsulta').addEventListener('keypress', e => {
         consultar();
     }
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem('token');
+    const usuario = localStorage.getItem('usuario');
+    if (token && usuario) {
+        document.getElementById('operatorName').innerText = 'Operador: ' + usuario;
+        show('dashboard');
+    } else {
+        show('login');
+    }
+}
+);
+
+
+function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
+    sessionStorage.removeItem('dados_op_atual');
+    
+    document.getElementById('operatorName').innerText = 'Não autenticado: ';
+    show('login');
+
+
+}
