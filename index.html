@@ -32,13 +32,53 @@
         </div>
     </section>
 
-    <section id="consulta" class="screen">
-        <div class="card">
-            <h2>Consulta OP / Lote</h2>
-            <input id="codigoConsulta" autofocus placeholder="Leia ou digite a OP/Lote">
-            <button onclick="consultar()">Buscar</button>
-            <div id="consultaResultado"></div>
-            <button onclick="show('dashboard')">Voltar</button>
+    <section id="movimentacao" class="screen">
+
+<div class="card">
+
+    <h2>Movimentação de OP</h2>
+
+    <label>Consultar OP</label>
+    <input id="codigoConsulta" placeholder="Leia ou digite a OP">
+    <div class="botoes">
+        <button onclick="consultar()">Buscar</button>
+        <button onclick="limparConsulta()">Limpar</button>
+    </div>
+
+    <div id="consultaResultado"></div>
+    
+
+    <br><br>
+
+    <!-- CABEÇALHO -->
+
+    <div class="op-header">
+
+        <div>
+            <label>OP</label>
+            <input id="op" readonly>
+        </div>
+
+        
+
+        <div>
+            <label>Referência</label>
+            <input id="produto" readonly>
+        </div>
+        
+        <div>
+            <label>Quantidade em processo</label>
+            <input id="quantidade" readonly>
+        </div>
+
+        <div>
+            <label>Data de Emissão</label>
+            <input id="dataEmissao" readonly>
+        </div>
+
+        <div>
+            <label>Produto</label>
+            <input id="descricao" readonly>
         </div>
     </section>
 

@@ -3,6 +3,11 @@
     font-family:Segoe UI,Arial,sans-serif
 }
 
+.botoes{
+    display:flex;
+    gap:10px;
+}
+
     body{
         background:#b2b59c
     }

@@ -103,63 +103,69 @@ async function consultar() {
         qtdEmProcesso = ta.QTDE_EM_PROCESSO;
     }
 
-        if (resultadodiv) {
-            resultadodiv.innerHTML = `
-                <div class="card" style="margin-top:15px; border-left: 5px solid #0e121a;">
-                    <div class="info"><b>OP:</b> ${dados.ordem_producao || op}</div>
-                    <div class="info"><b>Referência:</b> ${produto}</div>
-                    <div class="info"><b>Produto:</b> ${desc}</div>
-                    <hr style="margin: 10px 0; border: 0; border-top: 1px dashed #ddd;">
-                   <div class="info"><b>Tarefa Atual:</b> ${tarefa}</div>
-                   <div class="info"><b>Tarefa Atual:</b> ${tarefa}</div>
-                    <div class="info"><b>Setor Atual:</b> ${setor}</div>
-                    <div class="info"><b>Fase Produção:</b> ${faseProducao}</div>
-                    <div class="info"><b>Descrição da Fase:</b> ${descFaseProducao}</div>
-                    <div class="info"><b>Recurso Produtivo:</b> ${recurso}</div>
-                    <div class="info"><b>Descrição do Recurso:</b> ${descRecurso}</div>
+        // if (resultadodiv) {
+        //     resultadodiv.innerHTML = `
+        //         <div class="card" style="margin-top:15px; border-left: 5px solid #0e121a;">
+        //             <div class="info"><b>OP:</b> ${dados.ordem_producao || op}</div>
+        //             <div class="info"><b>Referência:</b> ${produto}</div>
+        //             <div class="info"><b>Produto:</b> ${desc}</div>
+        //             <hr style="margin: 10px 0; border: 0; border-top: 1px dashed #ddd;">
+        //            <div class="info"><b>Tarefa Atual:</b> ${tarefa}</div>
+        //            <div class="info"><b>Tarefa Atual:</b> ${tarefa}</div>
+        //             <div class="info"><b>Setor Atual:</b> ${setor}</div>
+        //             <div class="info"><b>Fase Produção:</b> ${faseProducao}</div>
+        //             <div class="info"><b>Descrição da Fase:</b> ${descFaseProducao}</div>
+        //             <div class="info"><b>Recurso Produtivo:</b> ${recurso}</div>
+        //             <div class="info"><b>Descrição do Recurso:</b> ${descRecurso}</div>
 
-                    <div class="info"><b>Qtd Prevista:</b> ${qtdPrevista}</div>
-                    <div class="info"><b>Qtd Em Processo:</b> ${qtdEmProcesso}</div>
-                </div>`;
-        }
+        //             <div class="info"><b>Qtd Prevista:</b> ${qtdPrevista}</div>
+        //             <div class="info"><b>Qtd Em Processo:</b> ${qtdEmProcesso}</div>
+        //         </div>`;
+        // }
         
         const tarefaAtual = dados.tarefas_ativas[0];
         const proximaTarefa = dados.tarefas_ativas[1];
+        
+
         const cabecalho = dados.cabecalho[0];
         // preenchimento dos campos do formulário de movimentação
         document.getElementById('op').value = dados.ordem_producao;
         document.getElementById('produto').value = cabecalho.PRODUTO;
         document.getElementById('descricao').value = cabecalho.DESC_PRODUTO;
-        document.getElementById('origem').value = tarefaAtual.DESC_RECURSO;
+        document.getElementById('origem').value = tarefaAtual.DESC_SETOR_PRODUCAO || '';
         document.getElementById('quantidade').value = tarefaAtual.QTDE_EM_PROCESSO;
+        document.getElementById('faseAtual').value =tarefaAtual.DESC_FASE_PRODUCAO || '';
+        document.getElementById('recursoAtual').value = tarefaAtual.DESC_RECURSO || '';
         
         if (proximaTarefa) {
-            document.getElementById('destino').value = proximaTarefa.DESC_RECURSO;
+            document.getElementById('destino').value = proximaTarefa.DESC_SETOR_PRODUCAO || '';
             document.getElementById('proxima_tarefa').value = proximaTarefa.TAREFA;
             document.getElementById('proxima_fase').value = proximaTarefa.FASE_PRODUCAO;
             document.getElementById('proximo_setor').value = proximaTarefa.SETOR_PRODUCAO;
             document.getElementById('proximo_recurso').value = proximaTarefa.RECURSO_PRODUTIVO || "";
+            document.getElementById('faseDestino').value = proximaTarefa.DESC_FASE_PRODUCAO || '';
+            document.getElementById('recursoDestino').value = proximaTarefa.DESC_RECURSO || '';
         } else {
             document.getElementById('destino').value = "Fluxo Finalizado";
             document.getElementById('proxima_tarefa').value = "";
             document.getElementById('proxima_fase').value = "";
             document.getElementById('proximo_setor').value = "";
             document.getElementById('proximo_recurso').value = "";
+            document.getElementById('faseDestino').value = '';
+            document.getElementById('recursoDestino').value = '';
         }
 
         document.getElementById('tarefa_atual').value = tarefaAtual.TAREFA;
-        document.getElementById('dataEmissao').value = cabecalho.DATA || "";
+
+        const dataFormatada = cabecalho.DATA.substring(8, 10) + "/" + cabecalho.DATA.substring(5, 7) + "/" + cabecalho.DATA.substring(0, 4);
+        
+        document.getElementById('dataEmissao').value = dataFormatada || "";
 
         sessionStorage.setItem('dados_op_atual', JSON.stringify(dados));
         
     } catch (erro) {
         console.error("Erro detectado na consulta:", erro);
-        if (resultadodiv) {
-            resultadodiv.innerHTML = `
-            <div class="error" style="display:block; margin-top:15px; color: black; font-weight: bold;">
-            ${erro.message}
-            </div>`;
-        }
+        
     }
 }
 
@@ -374,5 +380,27 @@ function logout() {
     document.getElementById('operatorName').innerText = 'Não autenticado: ';
     show('login');
 
+
+}
+
+function limparConsulta() {
+    document.getElementById('codigoConsulta').value = '';
+    document.getElementById('op').value = '';
+    document.getElementById('produto').value = '';
+    document.getElementById('descricao').value = '';
+    document.getElementById('origem').value = '';
+    document.getElementById('quantidade').value = '';
+    document.getElementById('faseAtual').value = '';
+    document.getElementById('recursoAtual').value = '';
+    document.getElementById('dataEmissao').value = '';
+        
+        
+    document.getElementById('destino').value =  '';
+    document.getElementById('proxima_tarefa').value = ''
+    document.getElementById('proxima_fase').value = ''
+    document.getElementById('proximo_setor').value = ''
+    document.getElementById('proximo_recurso').value =  '';
+    document.getElementById('faseDestino').value =  '';
+    document.getElementById('recursoDestino').value =  '';
 
 }
