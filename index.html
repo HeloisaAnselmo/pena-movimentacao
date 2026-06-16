@@ -27,8 +27,9 @@
     <section id="dashboard" class="screen">
         <div class="card">
             <h1>Menu Principal</h1>
-            <button class="big-btn" onclick="show('consulta')">CONSULTAR OP / LOTE</button>
-            <button class="big-btn" onclick="show('movimentacao')">MOVIMENTAR OP / LOTE</button>
+            <button class="big-btn" onclick="show('movimentacao')">
+                 CONSULTAR / MOVIMENTAR OP
+            </button>
         </div>
     </section>
 
@@ -80,63 +81,77 @@
             <label>Produto</label>
             <input id="descricao" readonly>
         </div>
-    </section>
 
+    </div>
 
-    <section id="movimentacao" class="screen">
-        <div class="card">
+    <!-- DUAS COLUNAS -->
 
-            <h2>Movimentação entre Setores</h2>
+    <div class="movimentacao-layout">
 
-            <div class="grid">
+        <!-- ORIGEM -->
 
-                <div>
-                    <label>OP</label>
-                    <input id="op" value="">
+        <div class="box origem">
 
+            <h3>Onde a OP está</h3>
 
-                    <label>Produto</label>
-                    <input id="produto" value="" readonly>
+            <label>Setor Atual</label>
+            <input id="origem" readonly>
 
-                    <label>Descrição</label>
-                    <input id="descricao" value="" readonly>
+            <label>Descrição da Fase</label>
+            <input id="faseAtual" readonly>
 
-                    <label>Data de Emissão</label>
-                    <input id="dataEmissao" type="">
-                </div>
-
-                <div>
-                    <label>Setor Atual (Tarefa Atual)</label>
-                    <input id="origem" value="Corte" readonly>
-
-                    <label>Próxima Tarefa (Destino)</label>
-                    <input id="destino" value="" readonly placeholder="">
-
-                    <label>Quantidade</label>
-                    <input id="quantidade" type="number" value="" readonly>
-
-                    <input type="hidden" id="tarefa_atual">
-                    <input type="hidden" id="proxima_tarefa">
-                    <input type="hidden" id="proximo_setor">
-                    <input type="hidden" id="proxima_fase">
-                    <input type="hidden" id="proximo_recurso">
-                </div>
-
-            </div>
-
-            <button id="btnMov" onclick="movimentar()">
-                Confirmar Movimentação
-            </button>
-
-            <div id="ok" class="success"></div>
-            <div id="erro" class="error"></div>
-
-            <button onclick="show('dashboard')">
-                Voltar
-            </button>
+            <label>Descrição do Recurso</label>
+            <input id="recursoAtual" readonly>
 
         </div>
-    </section>
+
+        <!-- SETA -->
+
+        <div class="seta">
+            ➜
+        </div>
+
+        <!-- DESTINO -->
+
+        <div class="box destino">
+
+            <h3>Destino da OP</h3>
+
+            <label>Destino</label>
+            <input id="destino" readonly>
+
+            <label>Descrição da Fase</label>
+            <input id="faseDestino" readonly>
+
+            <label>Descrição do Recurso</label>
+            <input id="recursoDestino" readonly>
+
+        </div>
+
+    </div>
+
+    <input type="hidden" id="tarefa_atual">
+    <input type="hidden" id="proxima_tarefa">
+    <input type="hidden" id="proximo_setor">
+    <input type="hidden" id="proxima_fase">
+    <input type="hidden" id="proximo_recurso">
+
+    <br>
+
+    <button id="btnMov" onclick="movimentar()">
+        Confirmar Movimentação
+    </button>
+
+    <div id="ok" class="success"></div>
+    <div id="erro" class="error"></div>
+
+    <button onclick="show('dashboard')">
+        Voltar
+    </button>
+
+</div>
+
+</section>
 
 
 <!-- <section id="movimentacao" class="screen">
