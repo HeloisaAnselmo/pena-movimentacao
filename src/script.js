@@ -76,8 +76,14 @@ async function consultar() {
         let faseProducao = '';
         let descFaseProducao = '';
 
+
+        // ADICIONADO
+        let faseProducao = '';
+        let descFaseProducao = '';
+
         let qtdPrevista = 0;
         let qtdEmProcesso = 0;
+        
         
         if (dados.cabecalho && Array.isArray(dados.cabecalho) && dados.cabecalho.length > 0 && dados.cabecalho[0]) {
             const cb = dados.cabecalho[0];
@@ -109,6 +115,7 @@ async function consultar() {
                     <div class="info"><b>Referência:</b> ${produto}</div>
                     <div class="info"><b>Produto:</b> ${desc}</div>
                     <hr style="margin: 10px 0; border: 0; border-top: 1px dashed #ddd;">
+                   <div class="info"><b>Tarefa Atual:</b> ${tarefa}</div>
                    <div class="info"><b>Tarefa Atual:</b> ${tarefa}</div>
                     <div class="info"><b>Setor Atual:</b> ${setor}</div>
                     <div class="info"><b>Fase Produção:</b> ${faseProducao}</div>
