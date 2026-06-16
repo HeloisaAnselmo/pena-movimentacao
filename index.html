@@ -10,13 +10,14 @@
     <header>
         <img src="img/equipe_de_T-removebg-preview.png" alt="Logo" width="150">
         <div id="operatorName">Não autenticado: </div>
+        <button onclick="logout()" style="cursor: pointer; width: auto; height: 50px">Sair</button>
     </header>
     <br><br><br><br><br>
     <section id="login" class="screen active">
         <div class="card">
             <h1>Login do Operador</h1>
-            <label>Matrícula</label>
-            <input id="matricula" placeholder="Digite sua matrícula">
+            <label>Usuário</label>
+            <input id="matricula" placeholder="Digite seu usuário">
             <label>Senha</label>
             <input id="senha" type="password" placeholder="Digite sua senha">
             <button onclick="login()">Entrar</button>
