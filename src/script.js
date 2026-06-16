@@ -76,11 +76,6 @@ async function consultar() {
         let faseProducao = '';
         let descFaseProducao = '';
 
-
-        // ADICIONADO
-        let faseProducao = '';
-        let descFaseProducao = '';
-
         let qtdPrevista = 0;
         let qtdEmProcesso = 0;
         
