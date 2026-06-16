@@ -41,8 +41,13 @@
 
     <label>Consultar OP</label>
     <input id="codigoConsulta" placeholder="Leia ou digite a OP">
+    <div class="botoes">
+        <button onclick="consultar()">Buscar</button>
+        <button onclick="limparConsulta()">Limpar</button>
+    </div>
 
-    <button onclick="consultar()">Buscar</button>
+    <div id="consultaResultado"></div>
+    
 
     <br><br>
 
@@ -55,18 +60,20 @@
             <input id="op" readonly>
         </div>
 
+        
+
         <div>
             <label>Referência</label>
             <input id="produto" readonly>
         </div>
-
+        
         <div>
-            <label>Quantidade</label>
+            <label>Quantidade em processo</label>
             <input id="quantidade" readonly>
         </div>
 
         <div>
-            <label>Data</label>
+            <label>Data de Emissão</label>
             <input id="dataEmissao" readonly>
         </div>
 
