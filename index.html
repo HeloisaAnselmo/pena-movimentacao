@@ -12,18 +12,18 @@
         <div id="operatorName">Não autenticado: </div>
         <button onclick="logout()" style="cursor: pointer; width: auto; height: 50px">Sair</button>
     </header>
-    <br><br><br><br><br>
+    <br>
     <section id="login" class="screen active">
-        <div class="card">
+        <div class="card" style="width: 55%; margin-left:auto; margin-right:auto;">
             <h1>Login do Operador</h1>
             <label>Usuário</label>
-            <input id="matricula" placeholder="Digite seu usuário">
+            <input id="matricula" placeholder="Digite seu usuário" style="width: 50%;"><br>
             <label>Senha</label>
-            <input id="senha" type="password" placeholder="Digite sua senha">
-            <button onclick="login()">Entrar</button>
+            <input id="senha" type="password" placeholder="Digite sua senha" style="width: 50%;">
+            <button onclick="login()" style="width: 55%; display:block; margin:0 auto;">Entrar</button>
         </div>
     </section>
-        <br><br><br><br><br><br>
+        <br>
     <section id="dashboard" class="screen">
         <div class="card">
             <h1>Menu Principal</h1>
@@ -66,6 +66,7 @@
             <label>Referência</label>
             <input id="produto" readonly>
         </div>
+    
         
         <div>
             <label>Quantidade em processo</label>
@@ -76,11 +77,12 @@
             <label>Data de Emissão</label>
             <input id="dataEmissao" readonly>
         </div>
-
+        
         <div>
             <label>Produto</label>
-            <input id="descricao" readonly>
+            <input id="descricao" readonly style="width: 350%;">
         </div>
+        
 
     </div>
 
@@ -207,21 +209,7 @@
     </div>
 </section> -->
 
-    <br><br><br><br><br><br><br><br>
-    <footer class="footer">
-    <div class="footer-container">
-    <div class="footer-logo"> 
-        <h2> <img src="img/pena-removebg-preview (1).png" alt="" width="200px"></h2> 
-        <p> Consulta e Movimentação de OP e Lotes.<br> Criado e Desenvolvido pela Equipe de T.I. </p>
-     </div> <div class="footer-social">
-         <h3>Redes Sociais</h3>
-        <a href="https://www.instagram.com/penafreestyle/">Instagram</a>
-        <a href="https://www.tiktok.com/@penafreestyle">TikTok</a> 
-        <a href="https://www.youtube.com/@penafreestyle">YouTube</a> 
-    </div>
- </div> 
- <div class="footer-bottom"> © 2026 Pena Freestyle - Todos os direitos reservados </div> 
-</footer>
+
 
 <script src="src/script.js"></script>
 <!-- <script src="src/movimentar.js"></script> -->

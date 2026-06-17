@@ -30,9 +30,22 @@ async function login() {
         show('dashboard');
 
     } catch (erro) {
-        alert(erro.message);
+    console.error("Erro detectado na consulta:", erro);
+
+    const caixaErro = document.getElementById('erro');
+
+    if (caixaErro) {
+        caixaErro.innerText = erro.message.includes("404") || erro.message.includes("OP")
+            ? "Número de OP não encontrada"
+            : erro.message || "Erro ao consultar OP";
+
+        caixaErro.style.display = 'block';
     }
+
+    limparConsulta();
 }
+    }
+
 
 function show(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -43,6 +56,11 @@ function show(id) {
 }
 
 async function consultar() {
+    const caixaErro = document.getElementById('erro');
+if (caixaErro) {
+    caixaErro.style.display = 'none';
+    caixaErro.innerText = '';
+}
     const inputConsulta = document.getElementById('codigoConsulta') || document.getElementById('op');
     const op = inputConsulta ? inputConsulta.value.trim() : "";
 
@@ -165,6 +183,17 @@ async function consultar() {
         
     } catch (erro) {
         console.error("Erro detectado na consulta:", erro);
+
+    alert("Número de OP não encontrada");
+
+    const caixaErro = document.getElementById('erro');
+
+    if (caixaErro) {
+        caixaErro.innerText = "Número de OP não encontrada";
+        caixaErro.style.display = 'block';
+    }
+
+    limparConsulta();
         
     }
 }
