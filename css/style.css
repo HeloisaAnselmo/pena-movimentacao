@@ -1,7 +1,104 @@
 *{
     margin:0;
-    padding:0;box-sizing:border-box;
-    font-family:Segoe UI,Arial,sans-serif
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body{
+    background:#b2b59c;
+}
+
+footer{
+    background-color: rgba(53, 51, 51, 0.7);
+    color:#fffdfd;
+    padding:10px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items: center; /* Centraliza verticalmente logo e botões */
+    height: 60px; /* Altura fixa para o cabeçalho */
+
+}
+
+.btn-sair {
+    width: auto;
+    height: 40px;
+    padding: 0 20px;
+}
+
+.screen{
+    display:none;
+    width:95%; /* Um pouco mais de margem em telas pequenas */
+    max-width:900px;
+    margin: 20px auto;
+}
+
+.active{
+    display:block;
+}
+
+.card{
+    background:#f8f8f8c3;
+    width:100%;
+    padding:20px;
+    border-radius:16px;
+    box-shadow:0 2px 5px rgba(0,0,0,.08);
+}
+
+/* Customização do Card de Login para ficar responsivo */
+.card-login {
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+h1, h2, h3{
+    margin-bottom:18px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+    margin-top: 8px;
+    color: #333;
+}
+
+input, select, button {
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #d1d5db;
+    margin-top:2px;
+    margin-bottom:14px;
+    font-size: 16px; /* Evita zoom automático no iOS */
+}
+
+button{
+    border:none;
+    background:#0e121a;
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+    transition: background 0.2s ease;
+}
+
+button:hover {
+    background: #1f2937;
+}
+
+#btnMov{
+    background: #068102;
+}
+
+/* Botão Secundário (Limpar / Voltar) */
+.btn-secundario {
+    background: #ff0000;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+}
+
+.btn-secundario:hover {
+    background: #d1d5db;
 }
 
 .botoes{
@@ -9,197 +106,155 @@
     gap:10px;
 }
 
-    body{
-        background:#b2b59c
-    }
-
-    header{
-    background-color: rgba(53, 51, 51, 0.7);
-    color:#fffdfd;padding:10px 24px;
-    display:flex;justify-content:space-between 
+.big-btn{
+    height:90px;
+    font-size:22px;
 }
 
-   .screen{
+.success, .error{
     display:none;
-    width:92%;
-    max-width:900px;
-    margin:auto;
-    padding:24px;
-    margin: 20px auto;
+    padding:15px;
+    border-radius:10px;
+    margin-top:12px;
+    color:#fff;
 }
 
-    .active{
-    display:block
-    
-    }
+.success{ background:#16a34a }
+.error{ background:#dc2626 }
 
-   .card{
-    background:#f8f8f8c3;
-    width:100%;
-    padding:20px;
-    border-radius:16px;
-    box-shadow:0 2px 5px rgba(0,0,0,.08);
-}
-    h1,h2{
-        margin-bottom:18px
-        
-    }
-    input,select,button
-    {width:100%;
-    padding:14px;
-    border-radius:10px;border:1px solid #d1d5db;margin-top:6px;margin-bottom:16px
-}
-
-    button{
-        border:none;
-        background:#0e121a;
-        color:#fff;font-weight:700;
-        cursor:pointer
-    }
-    .big-btn{
-        height:90px;font-size:22px
-    }
-    .success,.error{
-        display:none;
-        padding:15px;border-radius:10px;
-        margin-top:12px;color:#fff
-    }
-    .success{
-        background:#16a34a
-    }
-    .error{
-        background:#dc2626
-    }
-    .grid{
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:20px
-    }
-    .info{
-        padding:10px;
-        border-bottom:1px solid #eee}
-    @media(max-width:768px)
-    {
-        .grid{grid-template-columns:1fr}
-        }
-
-         .footer{ 
-        background:#2d2e2c; 
-        backdrop-filter:blur(10px); 
-        border-radius:20px; 
-        margin-top:83px; 
-        padding:10px 15px 10px; 
-        color:white; 
-        box-shadow:0 5px 25px rgba(0,0,0,0.3); 
-    
-    } 
-    .footer-container{
-    display:flex; 
-    justify-content:space-between; 
-    gap:40px; flex-wrap:wrap; 
-    } 
-    .footer-logo h2{
-    font-size:28px;
-    margin-bottom:10px;
-    border:none;
-    padding-left:0;
-    color:white; 
-}
-     .footer-logo p{
-    color:#f9f6f6;
-    line-height:1.6; 
-    } 
-    .footer-links, .footer-social{
-    display:flex; 
-    flex-direction:column; 
-    
-    } 
-    .footer-links h3, .footer-social h3{ 
-    margin-bottom:15px; 
-    color:#fff; 
-    
-    } 
-    .footer a{
-    color:#d1d5db; 
-    text-decoration:none; 
-    margin-bottom:10px; 
-    transition:0.3s; 
-    }
-     .footer a:hover{
-     color:#60a5fa;
-      transform:translateX(5px);
-     } 
-     .footer-bottom{
-     margin-top:30px;
-    border-top:1px solid rgba(255,255,255,0.1);
-    padding-top:20px;
-    text-align:center;
-    color:#9ca3af; 
-    font-size:14px; 
-    }
-
-    .op-header{
+/* --- GRID DO CABEÇALHO DA OP --- */
+.op-header{
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap:12px;
     margin-bottom:20px;
-    }
+}
 
-    .movimentacao-layout{
+/* Faz o campo de descrição ocupar toda a largura da linha de forma limpa */
+.campo-largo {
+    grid-column: 1 / -1;
+}
+
+/* --- LAYOUT DA MOVIMENTAÇÃO --- */
+.movimentacao-layout{
     display:grid;
     grid-template-columns: 1fr auto 1fr;
     gap:20px;
     align-items:center;
-    }
+}
 
-    .box{
-    flex:1;
+.box{
     padding:15px;
     border:1px solid #ddd;
     border-radius:10px;
     background:#f8f8f8;
-    }
+}
 
-    .box h3{
+.box h3{
     text-align:center;
     margin-bottom:20px;
-    }
+}
 
-    .seta{
-    font-size:50px;
+.seta{
+    font-size:40px;
     font-weight:bold;
-    }
-
-    .box input{
-    width:100%;
-     margin-bottom:15px;
-    }
-
-    .cabecalho-op{
-    display:grid;
-    grid-template-columns: 1fr 1fr 2fr 1fr;
-    gap:15px;
-    margin-bottom:25px;
+    text-align: center;
 }
 
-    .container {
-        width: 100%;
-        max-width: 1200px;
-        margin: auto;
-}
-
-@media (max-width: 900px){
-
+/* --- RESPONSIVIDADE (MOBILE) --- */
+@media (max-width: 768px){
     .movimentacao-layout{
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Transforma as colunas em linhas */
+        gap: 10px;
     }
 
     .seta{
         transform: rotate(90deg);
-        margin: 10px auto;
+        margin: 5px auto;
+        display: inline-block;
+        width: 100%;
+    }
+    
+    header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
     }
 
-    .box{
-        width:100%;
+    
+    
+    .btn-sair {
+        width: 100%;
+    }
+}
+
+/* --- AJUSTE PARA MONITORES DE 18" (TELAS COM POUCA ALTURA) --- */
+@media (max-width: 1366px) and (max-height: 768px), (max-width: 1024px) {
+    
+    /* 1. Remove margens excessivas das telas */
+    .screen {
+        margin: 10px auto;
+        padding: 10px;
+        max-width: 95%;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    /* 2. Reduz o tamanho dos textos e inputs */
+    h2 {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+    
+    h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    input, select, button {
+        padding: 10px; /* Mais fino */
+        margin-bottom: 8px; /* Menos espaço abaixo */
+        font-size: 14px;
+    }
+
+    label {
+        font-size: 12px;
+        margin-top: 4px;
+        margin-bottom: 2px;
+    }
+
+    /* 3. Força os dados da OP a ficarem estritamente em uma linha horizontal */
+    .op-header {
+        grid-template-columns: repeat(4, 1fr) 2fr; /* 4 colunas pequenas e a descrição maior */
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .campo-largo {
+        grid-column: auto; /* Desfaz o comportamento de ocupar a linha toda */
+    }
+
+    /* 4. Organiza os inputs de Origem e Destino internamente em GRID (Lado a lado) */
+    .box {
+        padding: 12px;
+    }
+    
+    /* Faz os 3 inputs de dentro do bloco ficarem na horizontal */
+    .box .form-group-inner {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    /* 5. Ajusta a seta para o meio */
+    .seta {
+        font-size: 35px;
+    }
+
+    /* Esconde os <br> para economizar preciosos pixels de altura */
+    br {
+        display: none;
     }
 }

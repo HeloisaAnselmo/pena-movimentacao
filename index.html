@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pena Freestyle</title>
-<link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pena Freestyle</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <img src="img/equipe_de_T-removebg-preview.png" alt="Logo" width="150">
-        <div id="operatorName">Não autenticado: </div>
-        <button onclick="logout()" style="cursor: pointer; width: auto; height: 50px">Sair</button>
-    </header>
-    <br>
+    
+
     <section id="login" class="screen active">
-        <div class="card" style="width: 55%; margin-left:auto; margin-right:auto;">
+        <div class="card card-login">
             <h1>Login do Operador</h1>
-            <label>Usuário</label>
-            <input id="matricula" placeholder="Digite seu usuário" style="width: 50%;"><br>
-            <label>Senha</label>
-            <input id="senha" type="password" placeholder="Digite sua senha" style="width: 50%;">
-            <button onclick="login()" style="width: 55%; display:block; margin:0 auto;">Entrar</button>
+            <label for="matricula">Usuário</label>
+            <input id="matricula" placeholder="Digite seu usuário">
+            
+            <label for="senha">Senha</label>
+            <input id="senha" type="password" placeholder="Digite sua senha">
+            
+            <button onclick="login()">Entrar</button>
         </div>
     </section>
-        <br>
+
     <section id="dashboard" class="screen">
         <div class="card">
             <h1>Menu Principal</h1>
@@ -31,187 +29,93 @@
                  CONSULTAR / MOVIMENTAR OP
             </button>
         </div>
+        
     </section>
 
     <section id="movimentacao" class="screen">
+        <div class="card">
+            <h2>Movimentação de OP</h2>
 
-<div class="card">
-
-    <h2>Movimentação de OP</h2>
-
-    <label>Consultar OP</label>
-    <input id="codigoConsulta" placeholder="Leia ou digite a OP">
-    <div class="botoes">
-        <button onclick="consultar()">Buscar</button>
-        <button onclick="limparConsulta()">Limpar</button>
-    </div>
-
-    <div id="consultaResultado"></div>
-    
-
-    <br><br>
-
-    <!-- CABEÇALHO -->
-
-    <div class="op-header">
-
-        <div>
-            <label>OP</label>
-            <input id="op" readonly>
-        </div>
-
-        
-
-        <div>
-            <label>Referência</label>
-            <input id="produto" readonly>
-        </div>
-    
-        
-        <div>
-            <label>Quantidade em processo</label>
-            <input id="quantidade" readonly>
-        </div>
-
-        <div>
-            <label>Data de Emissão</label>
-            <input id="dataEmissao" readonly>
-        </div>
-        
-        <div>
-            <label>Produto</label>
-            <input id="descricao" readonly style="width: 350%;">
-        </div>
-        
-
-    </div>
-
-    <!-- DUAS COLUNAS -->
-
-    <div class="movimentacao-layout">
-
-        <!-- ORIGEM -->
-
-        <div class="box origem">
-
-            <h3>Onde a OP está</h3>
-
-            <label>Setor Atual</label>
-            <input id="origem" readonly>
-
-            <label>Descrição da Fase</label>
-            <input id="faseAtual" readonly>
-
-            <label>Descrição do Recurso</label>
-            <input id="recursoAtual" readonly>
-
-        </div>
-
-        <!-- SETA -->
-
-        <div class="seta">
-            ➜
-        </div>
-
-        <!-- DESTINO -->
-
-        <div class="box destino">
-
-            <h3>Destino da OP</h3>
-
-            <label>Destino</label>
-            <input id="destino" readonly>
-
-            <label>Descrição da Fase</label>
-            <input id="faseDestino" readonly>
-
-            <label>Descrição do Recurso</label>
-            <input id="recursoDestino" readonly>
-
-        </div>
-
-    </div>
-
-    <input type="hidden" id="tarefa_atual">
-    <input type="hidden" id="proxima_tarefa">
-    <input type="hidden" id="proximo_setor">
-    <input type="hidden" id="proxima_fase">
-    <input type="hidden" id="proximo_recurso">
-
-    <br>
-
-    <button id="btnMov" onclick="movimentar()">
-        Confirmar Movimentação
-    </button>
-
-    <div id="ok" class="success"></div>
-    <div id="erro" class="error"></div>
-
-    <button onclick="show('dashboard')">
-        Voltar
-    </button>
-
-</div>
-
-</section>
-
-
-<!-- <section id="movimentacao" class="screen">
-    <div class="card">
-
-        <h2>Movimentação entre Setores</h2>
-
-        <div class="grid">
-
-            <div>
-                <label>OP</label>
-                <input id="op" value="20260001">
-
-                <label>Produto</label>
-                <input id="produto" value="CAMISETA MOVE HEART">
-
-                <label>Descrição</label>
-                <input id="descricao" value="CAMISETA MOVE HEART AZUL MARINHO">
-
-              <label>Data de Emissão</label>
-                <input id="dataEmissao" type="date">
+            <label for="codigoConsulta">Consultar OP</label>
+            <input id="codigoConsulta" placeholder="Leia ou digite a OP">
+            <div class="botoes">
+                <button onclick="consultar()">Buscar</button>
+                <button onclick="limparConsulta()" class="btn-secundario">Limpar</button>
             </div>
 
-            <div>
-                <label>Setor Atual</label>
-                <input id="origem" value="Corte">
+            <div id="consultaResultado"></div>
+            <br>
 
-                <label>Destino</label>
-                <select id="destino">
-                    <option value="">Selecione</option>
-                    <option>Costura</option>
-                    <option>Acabamento</option>
-                    <option>Expedição</option>
-                </select>
-
-                <label>Quantidade</label>
-                <input id="quantidade" type="number" value="" readonly>
+            <div class="op-header">
+                <div>
+                    <label>OP</label>
+                    <input id="op" readonly>
+                </div>
+                <div>
+                    <label>Referência</label>
+                    <input id="produto" readonly>
+                </div>
+                <div>
+                    <label>Quantidade em processo</label>
+                    <input id="quantidade" readonly>
+                </div>
+                <div>
+                    <label>Data de Emissão</label>
+                    <input id="dataEmissao" readonly>
+                </div>
+                <div class="campo-largo">
+                    <label>Produto</label>
+                    <input id="descricao" readonly>
+                </div>
             </div>
 
+            <div class="movimentacao-layout">
+                <div class="box origem">
+                    <h3>Onde a OP está</h3>
+                    <label>Setor Atual</label>
+                    <input id="origem" readonly>
+                    <label>Descrição da Fase</label>
+                    <input id="faseAtual" readonly>
+                    <label>Descrição do Recurso</label>
+                    <input id="recursoAtual" readonly>
+                </div>
+
+                <div class="seta">➜</div>
+
+                <div class="box destino">
+                    <h3>Destino da OP</h3>
+                    <label>Destino</label>
+                    <input id="destino" readonly>
+                    <label>Descrição da Fase</label>
+                    <input id="faseDestino" readonly>
+                    <label>Descrição do Recurso</label>
+                    <input id="recursoDestino" readonly>
+                </div>
+            </div>
+
+            <input type="hidden" id="tarefa_atual">
+            <input type="hidden" id="proxima_tarefa">
+            <input type="hidden" id="proximo_setor">
+            <input type="hidden" id="proxima_fase">
+            <input type="hidden" id="proximo_recurso">
+
+            <br>
+            <button id="btnMov" onclick="movimentar()">Confirmar Movimentação</button>
+
+            <div id="ok" class="success"></div>
+            <div id="erro" class="error"></div>
+
+            <button onclick="show('dashboard')">Voltar</button>
         </div>
+    </section>
+    <footer>
+        <img src="img/equipe_de_T-removebg-preview.png" alt="Logo" width="80">
+        <div id="operatorName">Não autenticado: </div>
+        <button onclick="logout()" class="btn-sair">Sair</button>
+    </footer>
 
-        <button id="btnMov" onclick="movimentar()">
-            Confirmar Movimentação
-        </button>
+    
 
-        <div id="ok" class="success"></div>
-        <div id="erro" class="error"></div>
-
-        <button onclick="show('dashboard')">
-            Voltar
-        </button>
-
-    </div>
-</section> -->
-
-
-
-<script src="src/script.js"></script>
-<!-- <script src="src/movimentar.js"></script> -->
+    <script src="src/script.js"></script>
 </body>
 </html>

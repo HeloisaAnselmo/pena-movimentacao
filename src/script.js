@@ -360,10 +360,7 @@ async function movimentar() {
             throw new Error(resposta.detail || 'Erro ao processar a movimentação');
         }
 
-        if (caixaOk) {
-            caixaOk.innerText = 'Movimentação registrada com sucesso!';
-            caixaOk.style.display = 'block';
-        }
+        alert('OP Movimentada com sucesso!');
     }
     catch (err) {
         console.error('Erro na movimentação', err);
@@ -431,5 +428,6 @@ function limparConsulta() {
     document.getElementById('proximo_recurso').value =  '';
     document.getElementById('faseDestino').value =  '';
     document.getElementById('recursoDestino').value =  '';
+
 
 }
