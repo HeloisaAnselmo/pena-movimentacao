@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pena Freestyle</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     
@@ -23,15 +26,95 @@
     </section>
 
     <section id="dashboard" class="screen">
-        <div class="card">
-            <h1>Menu Principal</h1>
-            <button class="big-btn" onclick="show('movimentacao')">
-                 CONSULTAR / MOVIMENTAR OP
+    <div class="card">
+        <h1 style="color: white;">Menu Principal</h1>
+
+        <button class="big-btn" onclick="show('movimentacao')">
+            CONSULTAR / MOVIMENTAR OP
+        </button>
+
+        <button class="big-btn" onclick="show('consulta')">
+            CONSULTA DE PRODUÇÃO
+        </button>
+
+    </div>
+</section>
+
+    <section id="consulta" class="screen">
+
+    <div class="card">
+
+        <h2 style="color: white;">Consulta de Produção</h2>
+
+        <div class="op-header">
+
+    <div>
+        <label>Consultar por</label>
+
+        <select id="tipoConsulta" onchange="alterarTipoConsulta()">
+            <option value="op">OP</option>
+            <option value="produto">Produto</option>
+            <option value="fase">Fase</option>
+        </select>
+    </div>
+
+    <div id="campoTexto">
+        <label>Valor</label>
+        <input id="valorConsulta" placeholder="Digite o valor">
+    </div>
+
+    <div id="campoFase" style="display:none;">
+        <label>Fase</label>
+
+        <select id="consultaFase">
+            <option value="">Escolher</option>
+            <option value="PCP">PCP</option>
+            <option value="Corte">Corte</option>
+            <option value="Almoxarifado">Almoxarifado</option>
+            <option value="Estamparia">Estamparia</option>
+            <option value="Costura">Costura</option>
+            <option value="Acabamento">Acabamento</option>
+        </select>
+    </div>
+
+</div>
+
+        <div class="botoes">
+            <button onclick="buscarConsulta()">
+                Buscar
+            </button>
+
+            <button class="btn-secundario" onclick="limparConsultaProducao()">
+                Limpar
             </button>
         </div>
-        
-    </section>
 
+        <div id="resultadoTabela" class="tabela-consulta">
+        <table>
+            <thead style="color:white;">
+                <tr>
+                    <th>OP</th>
+                    <th>Produto</th>
+                    <th>Descrição</th>
+                    <th>Fase</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+
+             <tbody id="resultadoConsulta">
+             </tbody>
+
+        </table>
+
+        </div>
+
+        <button onclick="show('dashboard')">
+            Voltar
+        </button>
+
+    </div>
+
+</section>
     <section id="movimentacao" class="screen">
         <div class="card">
             <h2>Movimentação de OP</h2>
@@ -49,22 +132,22 @@
             <div class="op-header">
                 <div>
                     <label>OP</label>
-                    <input id="op" readonly>
+                    <input id="op" readonly style="background-color: rgba(128, 128, 128, 0.719);">
                 </div>
                 <div>
-                    <label>Referência</label>
-                    <input id="produto" readonly>
+                    <label>Referência:</label>
+                    <input id="produto" readonly style="background-color: rgba(128, 128, 128, 0.719);">
                 </div>
                 <div>
-                    <label>Quantidade em processo</label>
-                    <input id="quantidade" readonly>
+                    <label>Quantidade em processo:</label>
+                    <input id="quantidade" readonly style="background-color: rgba(128, 128, 128, 0.719);">
                 </div>
                 <div>
-                    <label>Data de Emissão</label>
-                    <input id="dataEmissao" readonly>
+                    <label>Data de Emissão:</label>
+                    <input id="dataEmissao" readonly style="background-color: rgba(128, 128, 128, 0.719);">
                 </div>
                 <div class="campo-largo">
-                    <label>Produto</label>
+                    <label>Produto:</label>
                     <input id="descricao" readonly>
                 </div>
             </div>
@@ -108,8 +191,8 @@
             <button onclick="show('dashboard')">Voltar</button>
         </div>
     </section>
-    <footer>
-        <img src="img/equipe_de_T-removebg-preview.png" alt="Logo" width="80">
+    <footer id="footerSistema">
+        <img src="img/pena-removebg-preview (1).png" alt="" width="150">
         <div id="operatorName">Não autenticado: </div>
         <button onclick="logout()" class="btn-sair">Sair</button>
     </footer>

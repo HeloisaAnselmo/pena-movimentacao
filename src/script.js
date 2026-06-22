@@ -30,7 +30,7 @@ async function login() {
         show('dashboard');
 
     } catch (erro) {
-    console.error("Erro detectado na consulta:", erro);
+    console.error("Erro no login:", erro);
 
     const caixaErro = document.getElementById('erro');
 
@@ -93,7 +93,8 @@ if (caixaErro) {
         // ADICIONADO
         let faseProducao = '';
         let descFaseProducao = '';
-
+        let recurso = '';
+        let descRecurso = '';
         let qtdPrevista = 0;
         let qtdEmProcesso = 0;
         
@@ -198,6 +199,52 @@ if (caixaErro) {
     }
 }
 
+function alterarTipoConsulta(){
+
+    const tipo = document.getElementById("tipoConsulta").value;
+
+    const campoTexto = document.getElementById("campoTexto");
+    const campoFase = document.getElementById("campoFase");
+
+    if(tipo === "fase"){
+
+        campoTexto.style.display = "none";
+        campoFase.style.display = "block";
+
+    }else{
+
+        campoTexto.style.display = "block";
+        campoFase.style.display = "none";
+
+    }
+
+}
+
+
+   function buscarConsulta(){
+
+    const tipo = document.getElementById("tipoConsulta").value;
+
+    let valor = "";
+
+    if(tipo === "fase"){
+        valor = document.getElementById("consultaFase").value;
+    }else{
+        valor = document.getElementById("valorConsulta").value.trim();
+    }
+
+    if(valor === ""){
+        alert("Informe um valor.");
+        return;
+    }
+
+    console.log("Tipo:", tipo);
+    console.log("Valor:", valor);
+
+    // aqui depois iremos chamar o backend
+}
+
+
 async function movimentar() {
     const botao = document.getElementById('btnMov');
     const caixaOk = document.getElementById('ok');
@@ -215,6 +262,7 @@ async function movimentar() {
         }
         return;
     }
+
 
     const tarefaAtualDoBanco = dadosOp.tarefas_ativas[0];
 
@@ -377,25 +425,64 @@ async function movimentar() {
     }
 }
 
-document.getElementById('codigoConsulta').addEventListener('keypress', e => {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        consultar();
-    }
-});
-
 
 document.addEventListener("DOMContentLoaded", () => {
+
     const token = localStorage.getItem('token');
     const usuario = localStorage.getItem('usuario');
+
     if (token && usuario) {
         document.getElementById('operatorName').innerText = 'Operador: ' + usuario;
         show('dashboard');
     } else {
         show('login');
     }
-}
-);
+});
+    // ENTER NO LOGIN
+    const senha = document.getElementById('senha');
+
+    if (senha) {
+        senha.addEventListener('keydown', function(e){
+
+            if(e.key === 'Enter'){
+                e.preventDefault();
+                login();
+            }
+
+        });
+    }
+
+    // ENTER NA CONSULTA DE MOVIMENTAÇÃO
+    const codigoConsulta = document.getElementById('codigoConsulta');
+
+    if (codigoConsulta) {
+        codigoConsulta.addEventListener('keydown', function(e){
+
+            if(e.key === 'Enter'){
+                e.preventDefault();
+                consultar();
+            }
+
+        });
+    }
+
+    // ENTER NA TELA DE CONSULTA
+    ['valorConsulta', 'consultaFase'].forEach(id => {
+
+    const campo = document.getElementById(id);
+
+    if (campo) {
+        campo.addEventListener('keydown', function(e){
+
+            if(e.key === 'Enter'){
+                e.preventDefault();
+                buscarConsulta();
+            }
+
+        });
+    }
+
+});
 
 
 function logout() {
@@ -409,25 +496,16 @@ function logout() {
 
 }
 
-function limparConsulta() {
-    document.getElementById('codigoConsulta').value = '';
-    document.getElementById('op').value = '';
-    document.getElementById('produto').value = '';
-    document.getElementById('descricao').value = '';
-    document.getElementById('origem').value = '';
-    document.getElementById('quantidade').value = '';
-    document.getElementById('faseAtual').value = '';
-    document.getElementById('recursoAtual').value = '';
-    document.getElementById('dataEmissao').value = '';
-        
-        
-    document.getElementById('destino').value =  '';
-    document.getElementById('proxima_tarefa').value = ''
-    document.getElementById('proxima_fase').value = ''
-    document.getElementById('proximo_setor').value = ''
-    document.getElementById('proximo_recurso').value =  '';
-    document.getElementById('faseDestino').value =  '';
-    document.getElementById('recursoDestino').value =  '';
+function limparConsultaProducao(){
 
+    document.getElementById("tipoConsulta").value = "op";
+    document.getElementById("valorConsulta").value = "";
+    document.getElementById("consultaFase").value = "";
+
+    alterarTipoConsulta();
+
+    document.getElementById("resultadoConsulta").innerHTML = "";
+
+    document.querySelector(".tabela-consulta").style.display = "none";
 
 }
