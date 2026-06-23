@@ -6,6 +6,20 @@
 
 }
 
+.branco {
+    color: white;
+}
+
+.cinza {
+    background-color: rgba(128, 128, 128, 0.719);
+}
+
+#campoFase {
+    display:none
+}
+
+
+
 body{
     min-height:100vh;
     padding-bottom:60px;
@@ -350,6 +364,7 @@ button:hover {
     .tabela-consulta{
     margin-top:20px;
     overflow-x:auto;
+    text-align: center;
 }
 
 .tabela-consulta table{

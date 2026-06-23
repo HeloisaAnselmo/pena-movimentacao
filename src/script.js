@@ -32,15 +32,15 @@ async function login() {
     } catch (erro) {
     console.error("Erro no login:", erro);
 
-    const caixaErro = document.getElementById('erro');
+    alert("Usuário ou senha inválidos");
 
-    if (caixaErro) {
-        caixaErro.innerText = erro.message.includes("404") || erro.message.includes("OP")
-            ? "Número de OP não encontrada"
-            : erro.message || "Erro ao consultar OP";
+    // if (caixaErro) {
+    //     caixaErro.innerText = erro.message.includes("404") || erro.message.includes("OP")
+    //         ? "Número de OP não encontrada"
+    //         : erro.message || "Erro ao consultar OP";
 
-        caixaErro.style.display = 'block';
-    }
+    //     caixaErro.style.display = 'block';
+    // }
 
     limparConsulta();
 }
@@ -187,12 +187,12 @@ if (caixaErro) {
 
     alert("Número de OP não encontrada");
 
-    const caixaErro = document.getElementById('erro');
+    // const caixaErro = document.getElementById('erro');
 
-    if (caixaErro) {
-        caixaErro.innerText = "Número de OP não encontrada";
-        caixaErro.style.display = 'block';
-    }
+    // if (caixaErro) {
+    //     caixaErro.innerText = "Número de OP não encontrada";
+    //     caixaErro.style.display = 'block';
+    // }
 
     limparConsulta();
         
@@ -221,29 +221,124 @@ function alterarTipoConsulta(){
 }
 
 
-   function buscarConsulta(){
+async function buscarConsulta(){
 
     const tipo = document.getElementById("tipoConsulta").value;
 
-    let valor = "";
+    
 
-    if(tipo === "fase"){
-        valor = document.getElementById("consultaFase").value;
-    }else{
-        valor = document.getElementById("valorConsulta").value.trim();
+    const token = localStorage.getItem('token');
+    
+    
+    
+    try {
+        
+
+        let response
+        
+            if (tipo === "op") {
+                op = document.getElementById("valorConsulta").value.trim();
+                response = await fetch(`${API_URL}/consultaporop/${op}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+            })
+            };
+
+            if (tipo === "fase") {
+                fase = document.getElementById("consultaFase").value.trim();
+                response = await fetch(`${API_URL}/consultaporfase/${fase}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+
+            })}
+
+            if (tipo ==="produto") {
+                produto = document.getElementById("valorConsulta").value.trim();
+                response = await fetch(`${API_URL}/consultaporproduto/${produto}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+            }
+            
+            const dados = await response.json();
+
+            if (!response.ok) {
+            throw new Error(dados.detail);
+        }
+            
+            preencherTabela(dados);
+            
+
+
+            
+            
+            
+            
+            
+            
+
+
+    }
+    catch (erro) {
+        console.error("Erro na consulta:", erro);
+        alert("Erro ao consultar: " + (erro.message || "Erro desconhecido"));
     }
 
-    if(valor === ""){
-        alert("Informe um valor.");
-        return;
-    }
+
+
+
+
+    // if(tipo === "fase"){
+    //     valor = document.getElementById("consultaFase").value;
+    // }else{
+    //     valor = document.getElementById("valorConsulta").value.trim();
+    // }
+
 
     console.log("Tipo:", tipo);
     console.log("Valor:", valor);
 
-    // aqui depois iremos chamar o backend
+// aqui depois iremos chamar o backend
 }
 
+function preencherTabela(dados) {
+    const tbody = document.getElementById("resultadoConsulta");
+    document.querySelector(".tabela-consulta").style.display = "";
+    
+    
+    tbody.innerHTML = "";
+
+    let totalEmProducao = 0;
+
+    // Mapeia e insere cada linha do banco na tabela
+    dados.forEach(item => {
+        const linha = document.createElement("tr");
+
+        linha.innerHTML = `
+            <td>${item.ORDEM_PRODUCAO}</td>
+            <td>${item.REFERENCIA}</td>
+            <td>${item.ORIGINAL}</td>            
+            <td>${item.EM_PRODUCAO}</td>
+        `;
+
+        tbody.appendChild(linha);
+
+        totalEmProducao += item.EM_PRODUCAO
+
+        document.getElementById("totalEmProducao").value = totalEmProducao;
+
+    });
+
+
+
+
+}
 
 async function movimentar() {
     const botao = document.getElementById('btnMov');
@@ -498,14 +593,37 @@ function logout() {
 
 function limparConsultaProducao(){
 
-    document.getElementById("tipoConsulta").value = "op";
+    
     document.getElementById("valorConsulta").value = "";
     document.getElementById("consultaFase").value = "";
+    document.getElementById("totalEmProducao").value = "";
 
-    alterarTipoConsulta();
-
+    
     document.getElementById("resultadoConsulta").innerHTML = "";
 
     document.querySelector(".tabela-consulta").style.display = "none";
+
+}
+
+function limparConsulta() {
+    document.getElementById('codigoConsulta').value = '';
+    document.getElementById('op').value = '';
+    document.getElementById('produto').value = '';
+    document.getElementById('descricao').value = '';
+    document.getElementById('origem').value = '';
+    document.getElementById('quantidade').value = '';
+    document.getElementById('faseAtual').value = '';
+    document.getElementById('recursoAtual').value = '';
+    document.getElementById('dataEmissao').value = '';
+        
+        
+    document.getElementById('destino').value =  '';
+    document.getElementById('proxima_tarefa').value = ''
+    document.getElementById('proxima_fase').value = ''
+    document.getElementById('proximo_setor').value = ''
+    document.getElementById('proximo_recurso').value =  '';
+    document.getElementById('faseDestino').value =  '';
+    document.getElementById('recursoDestino').value =  '';
+
 
 }
