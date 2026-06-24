@@ -105,8 +105,8 @@
                     <th>Fase</th>
                     <th>OP</th>
                     <th>Produto</th>
-                    <th>Quantidade original</th>
-                    <th>Quantidade em processo</th>
+                    <th>Quant. original</th>
+                    <th>Quant. em processo</th>
                 </tr>
             </thead>
 
@@ -138,30 +138,32 @@
 
             <div id="consultaResultado"></div>
             
+<div class="op-header">
+    <div>
+        <label>OP</label>
+        <input id="op" class="cinza" readonly>
+    </div>
 
-            <div class="op-header">
-                <div>
-                    <label>OP</label>
-                    <input id="op" class="cinza" readonly>
-                </div>
-                <div>
-                    <label>Referência:</label>
-                    <input id="produto" class="cinza" readonly>
-                </div>
-                <div>
-                    <label>Quantidade em processo:</label>
-                    <input id="quantidade" class="cinza" readonly>
-                </div>
-                <div>
-                    <label>Data de Emissão:</label>
-                    <input id="dataEmissao" class="cinza" readonly>
-                </div>
-                
-                <div class="campo-largo">
-                    <label>Produto:</label>
-                    <input id="descricao" readonly style="background-color: rgba(128, 128, 128, 0.568);">
-                </div>
-            </div>
+    <div>
+        <label>Referência:</label>
+        <input id="produto" class="cinza" readonly>
+    </div>
+
+    <div>
+        <label>Quantidade em processo:</label>
+        <input id="quantidade" class="cinza" readonly>
+    </div>
+
+    <div>
+        <label>Data de Emissão:</label>
+        <input id="dataEmissao" class="cinza" readonly>
+    </div>
+</div>
+<div class="campo-largo">
+        <label>Produto:</label>
+        <input id="descricao" readonly style="background-color: rgba(128, 128, 128, 0.568);">
+    </div>
+            
             <div class="movimentacao-layout">
                 <div class="box origem">
                     <h3>Onde a OP está</h3>

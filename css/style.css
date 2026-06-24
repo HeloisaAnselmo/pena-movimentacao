@@ -229,18 +229,22 @@ button:hover {
 .error{ background:#dc2626 }
 
 /* --- GRID DO CABEÇALHO DA OP --- */
-.op-header{
-    display:grid;
-    grid-template-columns:
-        1fr 2fr 1fr;
-    gap:20px;
+.op-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
 }
 
+.op-header > div {
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+}
 
-/* Faz o campo de descrição ocupar toda a largura da linha de forma limpa */
 .campo-largo {
-    grid-column: 1 / -1;
-
+    flex: 1 1 100%;
 }
 
 /* --- LAYOUT DA MOVIMENTAÇÃO --- */
