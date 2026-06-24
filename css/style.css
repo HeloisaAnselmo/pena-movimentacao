@@ -27,11 +27,12 @@
 
 
 body{
-    min-height:100vh;
+    
+    min-height:calc(100vh - 60px);
     padding-bottom:60px;
     display:flex;
     justify-content:center;
-    align-items:center;
+    align-items:flex-start;
     background-color: #040013;
     background-size: cover;     
     background-position: center;  
@@ -299,89 +300,77 @@ button:hover {
 }
 
 /* --- AJUSTE PARA MONITORES DE 18" (TELAS COM POUCA ALTURA) --- */
-@media (max-width: 1366px) and (max-height: 768px), (max-width: 1024px) {
-    
-    /* 1. Remove margens excessivas das telas */
-    .screen {
-        margin: 10px auto;
-        padding: 10px;
-        max-width: 95%;
+@media (max-width: 1366px) and (max-height: 768px),
+       (max-width: 1024px) {
+
+    body{
+        align-items:flex-start;
+        padding-top:10px;
+        padding-bottom:65px;
     }
 
-    .card {
-     width:100%;
-    max-width:1100px;
-    padding:25px;
-    background:rgba(20,20,30,.45);
-    backdrop-filter:blur(18px);
-    border-radius:20px;
-    border:1px solid rgba(255,255,255,.08);
-    padding:35px;
-    box-shadow:0 15px 35px rgba(0,0,0,.45);
-
-}
+    .screen{
+        padding:5px;
+        margin:0 auto;
     }
 
-    /* 2. Reduz o tamanho dos textos e inputs */
-    h2 {
-        font-size: 20px;
-        margin-bottom: 12px;
+    .card{
+        padding:12px;
     }
-    
-    h3 {
-        font-size: 16px;
-        margin-bottom: 10px;
+
+    h2{
+        font-size:20px;
+        margin-bottom:8px;
+    }
+
+    h3{
+        font-size:15px;
+        margin-bottom:6px;
+    }
+
+    label{
+        font-size:12px;
+        margin-bottom:2px;
     }
 
     input,
     select,
     button{
-    height:48px;
-    font-size:16px;
+        height:34px;
+        padding:6px 10px;
+        margin-bottom:6px;
+        font-size:13px;
+    }
+
+    .op-header{
+        gap:6px;
+    }
+
+    .movimentacao-layout{
+        gap:10px;
+    }
+
+    .box{
+        padding:8px;
+    }
+
+    .box h3{
+        margin-bottom:10px;
+    }
+
+    .seta{
+        font-size:28px;
+    }
+
+    .box label{
+    margin-bottom:2px;
+    font-size:11px;
 }
 
-    label {
-        font-size: 12px;
-        margin-top: 4px;
-        margin-bottom: 2px;
-    }
-
-    /* 3. Força os dados da OP a ficarem estritamente em uma linha horizontal */
-    .op-header {
-        grid-template-columns: repeat(4, 1fr) 2fr; /* 4 colunas pequenas e a descrição maior */
-        gap: 10px;
-        margin-bottom: 15px;
-    }
-
-    .campo-largo {
-        grid-column: 1/5; /* Desfaz o comportamento de ocupar a linha toda */
-        grid-row: 2; 
-         width: 100%;
-        max-width: 500px;
-
-    }
-
-    /* 4. Organiza os inputs de Origem e Destino internamente em GRID (Lado a lado) */
-    .box {
-        padding: 12px;
-    }
-    
-    /* Faz os 3 inputs de dentro do bloco ficarem na horizontal */
-    .box .form-group-inner {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-    }
-
-    /* 5. Ajusta a seta para o meio */
-    .seta {
-        font-size: 35px;
-    }
-
-    /* Esconde os <br> para economizar preciosos pixels de altura */
-    br {
-        display: none;
-    }
+.box input{
+    margin-bottom:2px;
+}
+}
     .tabela-consulta{
     margin-top:25px;
     width:100%;
