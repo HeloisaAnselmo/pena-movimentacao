@@ -14,8 +14,14 @@
     background-color: rgba(128, 128, 128, 0.719);
 }
 
-#campoFase {
-    display:none
+#campoConsulta{
+    position:relative;
+    min-height:80px;
+}
+
+
+#campoFase{
+    display:none;
 }
 
 
@@ -26,7 +32,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background-image: url("../img/fundo-login.png");
+    background-color: #040013;
     background-size: cover;     
     background-position: center;  
     background-repeat: no-repeat; 
@@ -57,13 +63,14 @@ footer{
 
 .screen{
     display:none;
-    width:95%; /* Um pouco mais de margem em telas pequenas */
-    max-width:900px;
-    margin: 20px auto;
-    color: white;
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+    color:#fff;
 }
 
-.active{
+.screen.active{
     display:block;
 }
 
@@ -203,6 +210,7 @@ button:hover {
     gap:10px;
 }
 
+
 .big-btn{
     height:90px;
     font-size:22px;
@@ -222,12 +230,14 @@ button:hover {
 /* --- GRID DO CABEÇALHO DA OP --- */
 .op-header{
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap:12px;
-    margin-bottom:20px;
-    background-color:rgba(254, 250, 250, 0);
-    border-radius:10px;
-    
+
+    grid-template-columns:
+        220px
+        300px
+        220px;
+
+    gap:20px;
+    align-items:start;
 }
 
 /* Faz o campo de descrição ocupar toda a largura da linha de forma limpa */
@@ -302,7 +312,16 @@ button:hover {
     }
 
     .card {
-        padding: 15px;
+    width:100%;
+    max-width:1050px;
+    margin:auto;
+    background:rgba(20,20,30,.45);
+    backdrop-filter:blur(18px);
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,.08);
+    padding:35px;
+    box-shadow:0 15px 35px rgba(0,0,0,.45);
+}
     }
 
     /* 2. Reduz o tamanho dos textos e inputs */
@@ -317,9 +336,11 @@ button:hover {
     }
 
     input, select, button {
-        padding: 10px; /* Mais fino */
-        margin-bottom: 8px; /* Menos espaço abaixo */
-        font-size: 14px;
+    width:100%;
+    height:55px;
+    border-radius:12px;
+    font-size:22px;
+    padding:0 16px;
     }
 
     label {
@@ -360,16 +381,14 @@ button:hover {
     br {
         display: none;
     }
-}
     .tabela-consulta{
-    margin-top:20px;
-    overflow-x:auto;
-    text-align: center;
+    margin-top:25px;
+    width:100%;
 }
 
 .tabela-consulta table{
     width:100%;
-    table-layout:fixed;
+    border-collapse:collapse;
 }
 
 .tabela-consulta th:nth-child(1),
@@ -397,4 +416,30 @@ button:hover {
 .tabela-consulta th:nth-child(5),
 .tabela-consulta td:nth-child(5){
     width:10%;
+}
+
+#campoTexto,
+#campoFase{
+    width:100%;
+}
+
+#campoFase{
+    display:none;
+}
+
+#campoFase{
+    display:none;
+}
+
+.consulta-header{
+    display:grid;
+    grid-template-columns:220px 1fr 220px;
+    gap:20px;
+    align-items:end;
+    margin-bottom:20px;
+}
+
+.consulta-header .campo{
+    display:flex;
+    flex-direction:column;
 }

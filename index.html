@@ -40,38 +40,31 @@
     </div>
 </section>
 
-    <section id="consulta" class="screen">
+<section id="consulta" class="screen">
 
     <div class="card">
 
         <h2 class = "branco">Consulta de Produção</h2>
 
-        <div class="op-header">
+        <div class="consulta-header">
 
-    <div>
-        <label>Consultar por</label>
+            <div class="campo">
+                <label>CONSULTAR POR</label>
 
-        <select id="tipoConsulta" onchange="alterarTipoConsulta()">
-            <option value="op">OP</option>
-            <option value="produto">Produto</option>
-            <option value="fase">Fase</option>
-        </select>
-    </div>
+                <select id="tipoConsulta" onchange="alterarTipoConsulta()">
+                    <option value="op">OP</option>
+                    <option value="produto">Produto</option>
+                    <option value="fase">Fase</option>
+                </select>
+            </div>
 
-    <div id="campoTexto">
-        <label>Valor</label>
-        <input id="valorConsulta" placeholder="Digite o valor">
+            <div class="campo">
 
-        
-    </div>
-
-    <div>
-        <label>Total Em Produção</label>
-        <input id="totalEmProducao" readonly>
-    </div>
-        
-
-    <div id="campoFase">
+                <div id="campoTexto">
+                    <label id="lblConsulta">CONSULTAR</label>
+                    <input id="valorConsulta" placeholder="Digite a OP">
+                </div>   
+            <div id="campoFase" style="display:none;">
         <label>Fase</label>
 
         <select id="consultaFase">
@@ -84,8 +77,16 @@
             <option value="Acabamento">Acabamento</option>
         </select>
     </div>
+    
+    </div>    
 
-</div>
+    
+        <div class="campo">
+            <label>TOTAL EM PRODUÇÃO</label>
+            <input id="totalEmProducao" readonly>
+        </div>
+
+        </div>
 
         <div class="botoes">
             <button onclick="buscarConsulta()">
@@ -104,8 +105,8 @@
                     <th>Fase</th>
                     <th>OP</th>
                     <th>Produto</th>
-                    <th>Original</th>
-                    <th>Qtde em processo</th>
+                    <th>Quantidade original</th>
+                    <th>Quantidade em processo</th>
                 </tr>
             </thead>
 
@@ -123,6 +124,7 @@
     </div>
 
 </section>
+
     <section id="movimentacao" class="screen">
         <div class="card">
             <h2>Movimentação de OP</h2>
@@ -156,7 +158,7 @@
                 </div>
                 <div class="campo-largo">
                     <label>Produto:</label>
-                    <input id="descricao" readonly>
+                    <input id="descricao" readonly style="background-color: rgba(128, 128, 128, 0.568);">
                 </div>
             </div>
 

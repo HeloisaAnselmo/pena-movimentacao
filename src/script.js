@@ -203,18 +203,15 @@ function alterarTipoConsulta(){
 
     const tipo = document.getElementById("tipoConsulta").value;
 
-    const campoTexto = document.getElementById("campoTexto");
-    const campoFase = document.getElementById("campoFase");
-
     if(tipo === "fase"){
 
-        campoTexto.style.display = "none";
-        campoFase.style.display = "block";
+        document.getElementById("campoTexto").style.display = "none";
+        document.getElementById("campoFase").style.display = "block";
 
     }else{
 
-        campoTexto.style.display = "block";
-        campoFase.style.display = "none";
+        document.getElementById("campoTexto").style.display = "block";
+        document.getElementById("campoFase").style.display = "none";
 
     }
 
