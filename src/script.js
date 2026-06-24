@@ -321,10 +321,11 @@ function preencherTabela(dados) {
         const linha = document.createElement("tr");
 
         linha.innerHTML = `
-            <td>${item.ORDEM_PRODUCAO}</td>
-            <td>${item.REFERENCIA}</td>
-            <td>${item.ORIGINAL}</td>            
-            <td>${item.EM_PRODUCAO}</td>
+        <td>${item.FASE}</td>         
+        <td>${item.ORDEM_PRODUCAO}</td>
+        <td>${item.REFERENCIA}</td>
+        <td>${item.ORIGINAL}</td>   
+        <td>${item.EM_PRODUCAO}</td>
         `;
 
         tbody.appendChild(linha);
@@ -507,6 +508,8 @@ async function movimentar() {
     }
     catch (err) {
         console.error('Erro na movimentação', err);
+        alert("Erro na movimentação")
+
         if (caixaErro) {
             caixaErro.innerText = `${err.message}`;
             caixaErro.style.display = 'block';
