@@ -48,45 +48,41 @@
 
         <div class="consulta-header">
 
-            <div class="campo">
-                <label>CONSULTAR POR</label>
-
-                <select id="tipoConsulta" onchange="alterarTipoConsulta()">
-                    <option value="op">OP</option>
-                    <option value="produto">Produto</option>
-                    <option value="fase">Fase</option>
-                </select>
-            </div>
-
-            <div class="campo">
-
-                <div id="campoTexto">
-                    <label id="lblConsulta">CONSULTAR</label>
-                    <input id="valorConsulta" placeholder="Digite a OP">
-                </div>   
-            <div id="campoFase" style="display:none;">
-        <label>Fase</label>
-
-        <select id="consultaFase">
-            <option value="">Escolher</option>
-            <option value="PCP">PCP</option>
-            <option value="Corte">Corte</option>
-            <option value="Almoxarifado">Almoxarifado</option>
-            <option value="Estamparia">Estamparia</option>
-            <option value="Costura">Costura</option>
-            <option value="Acabamento">Acabamento</option>
+    <div class="campo">
+        <label>CONSULTAR POR</label>
+        <select id="tipoConsulta" onchange="alterarTipoConsulta()">
+                 <option value="op">OP</option> 
+                <option value="produto">Produto</option> 
+                <option value="fase">Fase</option> 
+            </select>
         </select>
     </div>
-    
-    </div>    
 
-    
-        <div class="campo">
-            <label>TOTAL EM PRODUÇÃO</label>
-            <input id="totalEmProducao" readonly>
-        </div>
+    <div class="campo" id="campoTexto">
+        <label id="lblConsulta">CONSULTAR</label>
+        <input id="valorConsulta" placeholder="Digite a OP">
+    </div>
 
-        </div>
+    <div class="campo" id="campoFase" style="display:none;">
+        <label>Fase</label>
+            <select id="consultaFase">
+                <option value="">Escolher</option> 
+                <option value="PCP">PCP</option>
+                <option value="Corte">Corte</option> 
+                <option value="Almoxarifado">Almoxarifado</option> 
+                <option value="Estamparia">Estamparia</option> 
+                <option value="Costura">Costura</option> 
+                <option value="Acabamento">Acabamento</option> 
+            </select>
+        </select>
+    </div>
+
+    <div class="campo">
+        <label>TOTAL EM PRODUÇÃO</label>
+        <input id="totalEmProducao" readonly>
+    </div>
+
+</div>
 
         <div class="botoes">
             <button onclick="buscarConsulta()">
