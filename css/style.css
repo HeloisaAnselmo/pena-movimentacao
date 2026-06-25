@@ -383,33 +383,36 @@ button:hover {
 .tabela-consulta table{
     width:100%;
     border-collapse:collapse;
+    table-layout:fixed;
 }
 
+/* Fase */
 .tabela-consulta th:nth-child(1),
 .tabela-consulta td:nth-child(1){
-    width:12%;
+    width:20%;
+    white-space: normal;
+    word-break: break-word;
 }
 
+/* OP */
 .tabela-consulta th:nth-child(2),
 .tabela-consulta td:nth-child(2){
-    width:42%;
+    width: 10%;
 }
 
 .tabela-consulta th:nth-child(3),
 .tabela-consulta td:nth-child(3){
-    width:18%;
+    width:40%;
 }
 
 .tabela-consulta th:nth-child(4),
 .tabela-consulta td:nth-child(4){
-    width:18%;
-    text-align:right;
-    font-weight: 700;
+    width:15%;
 }
 
 .tabela-consulta th:nth-child(5),
 .tabela-consulta td:nth-child(5){
-    width:10%;
+    width:15%;
 }
 
 #campoTexto,
@@ -435,4 +438,18 @@ button:hover {
 .consulta-header .campo{
     display:flex;
     flex-direction:column;
+}
+
+.tabela-consulta th,
+.tabela-consulta td{
+    padding:12px;
+    border:1px solid #444;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.tabela-consulta td:nth-child(3){
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
