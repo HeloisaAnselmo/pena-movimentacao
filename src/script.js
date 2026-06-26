@@ -30,17 +30,17 @@ async function login() {
         show('dashboard');
 
     } catch (erro) {
-    console.error("Erro detectado na consulta:", erro);
+    console.error("Erro no login:", erro);
 
-    const caixaErro = document.getElementById('erro');
+    alert("Usuário ou senha inválidos");
 
-    if (caixaErro) {
-        caixaErro.innerText = erro.message.includes("404") || erro.message.includes("OP")
-            ? "Número de OP não encontrada"
-            : erro.message || "Erro ao consultar OP";
+    // if (caixaErro) {
+    //     caixaErro.innerText = erro.message.includes("404") || erro.message.includes("OP")
+    //         ? "Número de OP não encontrada"
+    //         : erro.message || "Erro ao consultar OP";
 
-        caixaErro.style.display = 'block';
-    }
+    //     caixaErro.style.display = 'block';
+    // }
 
     limparConsulta();
 }
@@ -93,7 +93,8 @@ if (caixaErro) {
         // ADICIONADO
         let faseProducao = '';
         let descFaseProducao = '';
-
+        let recurso = '';
+        let descRecurso = '';
         let qtdPrevista = 0;
         let qtdEmProcesso = 0;
         
@@ -186,16 +187,155 @@ if (caixaErro) {
 
     alert("Número de OP não encontrada");
 
-    const caixaErro = document.getElementById('erro');
+    // const caixaErro = document.getElementById('erro');
 
-    if (caixaErro) {
-        caixaErro.innerText = "Número de OP não encontrada";
-        caixaErro.style.display = 'block';
-    }
+    // if (caixaErro) {
+    //     caixaErro.innerText = "Número de OP não encontrada";
+    //     caixaErro.style.display = 'block';
+    // }
 
     limparConsulta();
         
     }
+}
+
+function alterarTipoConsulta(){
+
+    const tipo = document.getElementById("tipoConsulta").value;
+
+    if(tipo === "fase"){
+
+        document.getElementById("campoTexto").style.display = "none";
+        document.getElementById("campoFase").style.display = "block";
+
+    }else{
+
+        document.getElementById("campoTexto").style.display = "block";
+        document.getElementById("campoFase").style.display = "none";
+
+    }
+
+}
+
+
+async function buscarConsulta(){
+
+    const tipo = document.getElementById("tipoConsulta").value;
+
+    
+
+    const token = localStorage.getItem('token');
+    
+    
+    
+    try {
+        
+
+        let response
+        
+            if (tipo === "op") {
+                op = document.getElementById("valorConsulta").value.trim();
+                response = await fetch(`${API_URL}/consultaporop/${op}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+            })
+            };
+
+            if (tipo === "fase") {
+                fase = document.getElementById("consultaFase").value.trim();
+                response = await fetch(`${API_URL}/consultaporfase/${fase}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+
+            })}
+
+            if (tipo ==="produto") {
+                produto = document.getElementById("valorConsulta").value.trim();
+                response = await fetch(`${API_URL}/consultaporproduto/${produto}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+            }
+            
+            const dados = await response.json();
+
+            if (!response.ok) {
+            throw new Error(dados.detail);
+        }
+            
+            preencherTabela(dados);
+            
+
+
+            
+            
+            
+            
+            
+            
+
+
+    }
+    catch (erro) {
+        console.error("Erro na consulta:", erro);
+        alert("Erro ao consultar: " + (erro.message || "Erro desconhecido"));
+    }
+
+
+
+
+
+    // if(tipo === "fase"){
+    //     valor = document.getElementById("consultaFase").value;
+    // }else{
+    //     valor = document.getElementById("valorConsulta").value.trim();
+    // }
+
+
+    console.log("Tipo:", tipo);
+    console.log("Valor:", valor);
+
+// aqui depois iremos chamar o backend
+}
+
+function preencherTabela(dados) {
+    const tbody = document.getElementById("resultadoConsulta");
+    document.querySelector(".tabela-consulta").style.display = "";
+    
+    
+    tbody.innerHTML = "";
+
+    let totalEmProducao = 0;
+
+    // Mapeia e insere cada linha do banco na tabela
+    dados.forEach(item => {
+        const linha = document.createElement("tr");
+
+        linha.innerHTML = `
+        <td>${item.FASE}</td>         
+        <td>${item.ORDEM_PRODUCAO}</td>
+        <td>${item.REFERENCIA}</td>
+        <td>${item.ORIGINAL}</td>   
+        <td>${item.EM_PRODUCAO}</td>
+        `;
+
+        tbody.appendChild(linha);
+
+        totalEmProducao += item.EM_PRODUCAO
+
+        document.getElementById("totalEmProducao").value = totalEmProducao;
+
+    });
+
+
+
+
 }
 
 async function movimentar() {
@@ -215,6 +355,7 @@ async function movimentar() {
         }
         return;
     }
+
 
     const tarefaAtualDoBanco = dadosOp.tarefas_ativas[0];
 
@@ -364,6 +505,8 @@ async function movimentar() {
     }
     catch (err) {
         console.error('Erro na movimentação', err);
+        alert("Erro na movimentação")
+
         if (caixaErro) {
             caixaErro.innerText = `${err.message}`;
             caixaErro.style.display = 'block';
@@ -377,25 +520,64 @@ async function movimentar() {
     }
 }
 
-document.getElementById('codigoConsulta').addEventListener('keypress', e => {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        consultar();
-    }
-});
-
 
 document.addEventListener("DOMContentLoaded", () => {
+
     const token = localStorage.getItem('token');
     const usuario = localStorage.getItem('usuario');
+
     if (token && usuario) {
         document.getElementById('operatorName').innerText = 'Operador: ' + usuario;
         show('dashboard');
     } else {
         show('login');
     }
-}
-);
+});
+    // ENTER NO LOGIN
+    const senha = document.getElementById('senha');
+
+    if (senha) {
+        senha.addEventListener('keydown', function(e){
+
+            if(e.key === 'Enter'){
+                e.preventDefault();
+                login();
+            }
+
+        });
+    }
+
+    // ENTER NA CONSULTA DE MOVIMENTAÇÃO
+    const codigoConsulta = document.getElementById('codigoConsulta');
+
+    if (codigoConsulta) {
+        codigoConsulta.addEventListener('keydown', function(e){
+
+            if(e.key === 'Enter'){
+                e.preventDefault();
+                consultar();
+            }
+
+        });
+    }
+
+    // ENTER NA TELA DE CONSULTA
+    ['valorConsulta', 'consultaFase'].forEach(id => {
+
+    const campo = document.getElementById(id);
+
+    if (campo) {
+        campo.addEventListener('keydown', function(e){
+
+            if(e.key === 'Enter'){
+                e.preventDefault();
+                buscarConsulta();
+            }
+
+        });
+    }
+
+});
 
 
 function logout() {
@@ -406,6 +588,20 @@ function logout() {
     document.getElementById('operatorName').innerText = 'Não autenticado: ';
     show('login');
 
+
+}
+
+function limparConsultaProducao(){
+
+    
+    document.getElementById("valorConsulta").value = "";
+    document.getElementById("consultaFase").value = "";
+    document.getElementById("totalEmProducao").value = "";
+
+    
+    document.getElementById("resultadoConsulta").innerHTML = "";
+
+    document.querySelector(".tabela-consulta").style.display = "none";
 
 }
 
