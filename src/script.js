@@ -304,6 +304,26 @@ async function buscarConsulta(){
 // aqui depois iremos chamar o backend
 }
 
+  function statusPorEmissao(dataEmissaoStr) {
+    const hoje = new Date();
+    const emissao = new Date(dataEmissaoStr);
+    const diffDias = Math.floor((hoje - emissao) / (1000 * 60 * 60 * 24));
+
+    if (diffDias <= 0) {
+        return { classe: 'status-azul', titulo: `${diffDias} dia(s) desde a emissão` };
+    }
+    if (diffDias <= 7) {
+        return { classe: 'status-verde', titulo: `${diffDias} dia(s) desde a emissão` };
+    }
+    if (diffDias <= 15) {
+        return { classe: 'status-amarelo', titulo: `${diffDias} dia(s) desde a emissão` };
+    }
+    if (diffDias <= 30) {
+        return { classe: 'status-vermelho', titulo: `${diffDias} dia(s) desde a emissão` };
+    }
+    return { classe: 'status-preto', titulo: `${diffDias} dia(s) desde a emissão` };
+}
+
 function preencherTabela(dados) {
     const tbody = document.getElementById("resultadoConsulta");
     document.querySelector(".tabela-consulta").style.display = "";
@@ -313,26 +333,27 @@ function preencherTabela(dados) {
 
     let totalEmProducao = 0;
 
-    // Mapeia e insere cada linha do banco na tabela
+
     dados.forEach(item => {
-        const linha = document.createElement("tr");
+    const linha = document.createElement("tr");
+    const status = statusPorEmissao(item.EMISSAO);
 
-        linha.innerHTML = `
-        <td>${item.EMISSAO.substring(8, 10) + "/" + item.EMISSAO.substring(5, 7) + "/" + item.EMISSAO.substring(0, 4)}</td>         
-        <td>${item.ORDEM_PRODUCAO}</td>
-        <td>${item.REFERENCIA}</td>
-        <td>${item.ORIGINAL}</td>   
-        <td>${item.EM_PRODUCAO}</td>
-        `;
+    linha.innerHTML = `
+    <td><span class="status-dot ${status.classe}" title="${status.titulo}"></span></td>
+    <td>${item.EMISSAO.substring(8, 10) + "/" + item.EMISSAO.substring(5, 7) + "/" + item.EMISSAO.substring(0, 4)}</td>
+    <td>${item.ORDEM_PRODUCAO}</td>
+    <td>${item.REFERENCIA}</td>
+    <td>${item.ORIGINAL}</td>   
+    <td>${item.EM_PRODUCAO}</td>
+    `;
 
-        tbody.appendChild(linha);
+    tbody.appendChild(linha);
 
-        totalEmProducao += item.EM_PRODUCAO
+    totalEmProducao += item.EM_PRODUCAO
 
-        document.getElementById("totalEmProducao").value = totalEmProducao;
+    document.getElementById("totalEmProducao").value = totalEmProducao;
 
-    });
-
+});
 
 
 
