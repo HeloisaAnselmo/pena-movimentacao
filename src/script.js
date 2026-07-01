@@ -318,7 +318,7 @@ function preencherTabela(dados) {
         const linha = document.createElement("tr");
 
         linha.innerHTML = `
-        <td>${item.FASE}</td>         
+        <td>${item.EMISSAO.substring(8, 10) + "/" + item.EMISSAO.substring(5, 7) + "/" + item.EMISSAO.substring(0, 4)}</td>         
         <td>${item.ORDEM_PRODUCAO}</td>
         <td>${item.REFERENCIA}</td>
         <td>${item.ORIGINAL}</td>   
